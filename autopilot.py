@@ -28,7 +28,7 @@ DEFAULTS: Dict[str, str] = {
     'LOCAL_LLM_BASE_URL': 'http://127.0.0.1:1234/v1',
     'LOCAL_LLM_API_KEY': 'lm-studio',
     'LLM_REQUEST_TIMEOUT_SECONDS': '45',
-    'LLM_MAX_COMPLETION_TOKENS': '512',
+    'LLM_MAX_COMPLETION_TOKENS': '1024',
     'LOCAL_STT_BASE_URL': 'http://127.0.0.1:8001/v1',
     'LOCAL_STT_API_KEY': 'local-stt',
     'LOCAL_STT_MODEL': 'whisper-1',
