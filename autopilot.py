@@ -54,7 +54,6 @@ APP_PACKAGES = [
     'google-api-python-client>=2.170.0',
     'google-auth>=2.40.0',
     'python-dotenv>=1.1.0',
-    'streamlit>=1.45.0',
     'aiohttp>=3.10.0',
 ]
 
@@ -391,20 +390,14 @@ def run_main():
 
     print(f'[ok] whisper.cpp CLI is ready: {whisper_cli}')
 
-    # Start adapters + dashboard, or reuse already-running copies from a previous run.
+    # Start adapters, or reuse already-running copies from a previous run.
     if not service_ready('local STT adapter', 'http://127.0.0.1:8001/health'):
         start_child([str(PYTHON_BIN), str(ROOT / 'autopilot.py'), '--serve-stt-adapter'], env=env)
     if not service_ready('local TTS adapter', 'http://127.0.0.1:8002/health'):
         start_child([str(PYTHON_BIN), str(ROOT / 'autopilot.py'), '--serve-tts-adapter'], env=env)
-    if not service_ready('streamlit dashboard', 'http://127.0.0.1:8501'):
-        start_child([
-            str(PYTHON_BIN), '-m', 'streamlit', 'run', 'streamlit_app/app.py',
-            '--server.headless=true', '--server.address=127.0.0.1', '--server.port=8501',
-        ], env=env)
 
     wait_health(HealthCheck('local STT adapter', 'http://127.0.0.1:8001/health', 120))
     wait_health(HealthCheck('local TTS adapter', 'http://127.0.0.1:8002/health', 120))
-    wait_health(HealthCheck('streamlit dashboard', 'http://127.0.0.1:8501', 90))
 
     check_lmstudio()
 

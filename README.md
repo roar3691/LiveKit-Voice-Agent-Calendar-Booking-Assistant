@@ -25,7 +25,6 @@ The agent relies on a multi-turn confirmation loop before mutating state on the 
 - `app/agent.py`: Handles the LiveKit WebRTC session lifecycle, audio stream multiplexing, and tool-calling registration.
 - `app/calendar_service.py`: Encapsulates Google Calendar API transactions and Service Account authorization.
 - `app/config.py`: Environment management and configuration wrapper.
-- `streamlit_app/app.py`: Diagnostics and testing interface.
 
 ## Prerequisites & Setup
 
@@ -61,9 +60,4 @@ The system is designed to be fully automated via the orchestrator.
 ```bash
 # Starts all local TTS/STT adapters, verifies LM Studio, and boots the agent
 python autopilot.py
-```
-
-To inspect telemetry or use the GUI harness independently:
-```bash
-uv run streamlit run streamlit_app/app.py
 ```
