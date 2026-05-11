@@ -139,8 +139,12 @@ def http_ok(url: str, timeout_sec: int = 2) -> bool:
     req = URLRequest(url, method='GET')
     try:
         with urlopen(req, timeout=timeout_sec) as resp:
-            return 200 <= resp.status < 300
-    except Exception:
+            return resp.status < 500
+    except Exception as exc:
+        # Some servers return non-2xx pages but are still alive (e.g. whisper-server root)
+        exc_str = str(exc)
+        if '405' in exc_str or '404' in exc_str:
+            return True
         return False
 
 
@@ -395,7 +399,8 @@ def run_main():
     ensure_piper_model_files(piper_model)
 
     # Launch persistent whisper-server (model stays hot in memory)
-    if not service_ready('whisper-server', f'http://127.0.0.1:{WHISPER_SERVER_PORT}/inference'):
+    whisper_health_url = f'http://127.0.0.1:{WHISPER_SERVER_PORT}/'
+    if not service_ready('whisper-server', whisper_health_url):
         print(f'[start] launching persistent whisper-server on port {WHISPER_SERVER_PORT}...')
         start_child([
             whisper_server_bin,
@@ -405,7 +410,7 @@ def run_main():
             '--no-timestamps',
             '--language', 'en',
         ], env=env)
-        wait_health(HealthCheck('whisper-server', f'http://127.0.0.1:{WHISPER_SERVER_PORT}/inference', 30))
+        wait_health(HealthCheck('whisper-server', whisper_health_url, 30))
 
     # Start adapters, or reuse already-running copies from a previous run.
     if not service_ready('local STT adapter', 'http://127.0.0.1:8001/health'):
