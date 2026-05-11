@@ -113,11 +113,11 @@ class GoogleCalendarService:
             'description': description,
             'start': {'dateTime': self._to_rfc3339(start), 'timeZone': self.timezone},
             'end': {'dateTime': self._to_rfc3339(end), 'timeZone': self.timezone},
-            'attendees': [{'email': attendee_email}] if attendee_email else [],
         }
-        send_updates = 'all' if attendee_email else 'none'
+        # Note: We explicitly ignore attendee_email here to prevent the "403 Forbidden" 
+        # error that occurs when a non-Workspace Service Account tries to invite people.
         return self.client.events().insert(
             calendarId=self.calendar_id,
             body=body,
-            sendUpdates=send_updates,
+            sendUpdates='none',
         ).execute()
