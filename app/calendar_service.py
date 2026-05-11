@@ -107,6 +107,16 @@ class GoogleCalendarService:
 
         return free_slots[:limit]
 
+    def update_event_time(self, event_id: str, new_start: datetime, new_end: datetime):
+        return self.client.events().patch(
+            calendarId=self.calendar_id,
+            eventId=event_id,
+            body={
+                'start': {'dateTime': self._to_rfc3339(new_start), 'timeZone': self.timezone},
+                'end': {'dateTime': self._to_rfc3339(new_end), 'timeZone': self.timezone},
+            },
+        ).execute()
+
     def create_event(self, summary: str, description: str, start: datetime, end: datetime, attendee_email: str):
         body = {
             'summary': summary,

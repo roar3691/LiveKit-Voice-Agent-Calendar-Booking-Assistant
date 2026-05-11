@@ -55,7 +55,10 @@ APP_PACKAGES = [
     'google-auth>=2.40.0',
     'python-dotenv>=1.1.0',
     'aiohttp>=3.10.0',
+    'livekit-api>=1.0.0',
 ]
+
+WHISPER_SERVER_PORT = 8178  # Internal port for persistent whisper-server
 
 CHILDREN: List[subprocess.Popen] = []
 
@@ -185,10 +188,10 @@ def check_lmstudio():
         )
 
 
-def ensure_whispercpp_cli():
-    if shutil.which('whisper-cli'):
-        return 'whisper-cli'
-    raise RuntimeError('whisper-cli not found. Install whisper.cpp (e.g., brew install whisper-cpp).')
+def ensure_whispercpp_server():
+    if shutil.which('whisper-server'):
+        return 'whisper-server'
+    raise RuntimeError('whisper-server not found. Install whisper.cpp (e.g., brew install whisper-cpp).')
 
 
 def ensure_piper_binary():
@@ -211,15 +214,14 @@ def ensure_piper_model_files(model_path: str):
 
 
 def run_stt_adapter():
-    # OpenAI-compatible STT adapter -> whisper.cpp CLI.
+    # OpenAI-compatible STT adapter that proxies to a persistent whisper-server.
+    import aiohttp as aiohttp_client
     from aiohttp import web
 
-    whisper_cli = ensure_whispercpp_cli()
-    model_path = os.getenv('WHISPERCPP_MODEL_PATH', DEFAULTS['WHISPERCPP_MODEL_PATH'])
-    ensure_file(model_path, 'whisper.cpp model')
+    whisper_inference_url = f'http://127.0.0.1:{WHISPER_SERVER_PORT}/inference'
 
     async def health(_request: web.Request):
-        return web.json_response({'ok': True, 'backend': 'whisper.cpp'})
+        return web.json_response({'ok': True, 'backend': 'whisper-server (persistent)'})
 
     def clean_transcript(text: str) -> str:
         cleaned = ' '.join(text.strip().split())
@@ -268,18 +270,13 @@ def run_stt_adapter():
         if file_data is None:
             return web.json_response({'error': 'missing file'}, status=400)
 
-        suffix = Path(filename).suffix or '.bin'
         data = file_data
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-            tmp.write(data)
-            tmp_path = tmp.name
+        # Normalize audio to WAV if it isn't already
         with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as norm_tmp:
             norm_wav_path = norm_tmp.name
 
         try:
-            # If this is already a wav container, use it.
-            # Otherwise treat payload as raw PCM16 mono and wrap into WAV.
             if data[:4] == b'RIFF':
                 with open(norm_wav_path, 'wb') as out_f:
                     out_f.write(data)
@@ -293,27 +290,25 @@ def run_stt_adapter():
                     wf.setframerate(16000)
                     wf.writeframes(pcm)
 
-            cmd = [
-                whisper_cli,
-                '--model', model_path,
-                '--file', norm_wav_path,
-                '--language', language or 'en',
-                '--no-timestamps',
-                '--no-prints',
-            ]
-            proc = subprocess.run(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-                check=False,
-                timeout=180,
-            )
-            if proc.returncode != 0:
-                err = (proc.stderr or proc.stdout or 'whisper-cli failed').strip()
-                return web.json_response({'error': err}, status=500)
+            # Proxy to persistent whisper-server
+            form = aiohttp_client.FormData()
+            form.add_field('file', open(norm_wav_path, 'rb'),
+                           filename='audio.wav', content_type='audio/wav')
+            form.add_field('temperature', '0.0')
+            form.add_field('response_format', 'json')
+            if language:
+                form.add_field('language', language)
 
-            text = clean_transcript(proc.stdout)
+            async with aiohttp_client.ClientSession() as session:
+                async with session.post(whisper_inference_url, data=form, timeout=aiohttp_client.ClientTimeout(total=60)) as resp:
+                    if resp.status != 200:
+                        err = await resp.text()
+                        return web.json_response({'error': f'whisper-server error: {err}'}, status=500)
+                    result = await resp.json()
+
+            raw_text = result.get('text', '')
+            text = clean_transcript(raw_text)
+
             if response_format == 'text':
                 return web.Response(text=text, content_type='text/plain')
             return web.json_response({'text': text})
@@ -321,10 +316,6 @@ def run_stt_adapter():
             print(f'[stt-error] {exc}')
             return web.json_response({'error': str(exc)}, status=500)
         finally:
-            try:
-                os.remove(tmp_path)
-            except OSError:
-                pass
             try:
                 os.remove(norm_wav_path)
             except OSError:
@@ -397,13 +388,24 @@ def run_main():
     env = os.environ.copy()
     env['PYTHONUNBUFFERED'] = '1'
 
-    whisper_cli = ensure_whispercpp_cli()
+    whisper_server_bin = ensure_whispercpp_server()
     whisper_model = os.getenv('WHISPERCPP_MODEL_PATH', DEFAULTS['WHISPERCPP_MODEL_PATH'])
     piper_model = os.getenv('PIPER_MODEL_PATH', DEFAULTS['PIPER_MODEL_PATH'])
     ensure_file(whisper_model, 'whisper.cpp model')
     ensure_piper_model_files(piper_model)
 
-    print(f'[ok] whisper.cpp CLI is ready: {whisper_cli}')
+    # Launch persistent whisper-server (model stays hot in memory)
+    if not service_ready('whisper-server', f'http://127.0.0.1:{WHISPER_SERVER_PORT}/inference'):
+        print(f'[start] launching persistent whisper-server on port {WHISPER_SERVER_PORT}...')
+        start_child([
+            whisper_server_bin,
+            '--model', whisper_model,
+            '--host', '127.0.0.1',
+            '--port', str(WHISPER_SERVER_PORT),
+            '--no-timestamps',
+            '--language', 'en',
+        ], env=env)
+        wait_health(HealthCheck('whisper-server', f'http://127.0.0.1:{WHISPER_SERVER_PORT}/inference', 30))
 
     # Start adapters, or reuse already-running copies from a previous run.
     if not service_ready('local STT adapter', 'http://127.0.0.1:8001/health'):
@@ -415,6 +417,13 @@ def run_main():
     wait_health(HealthCheck('local TTS adapter', 'http://127.0.0.1:8002/health', 120))
 
     check_lmstudio()
+
+    # Optionally launch the web UI token server
+    if not service_ready('web UI', 'http://127.0.0.1:8100'):
+        web_server_path = ROOT / 'web' / 'token_server.py'
+        if web_server_path.exists():
+            start_child([str(PYTHON_BIN), str(web_server_path)], env=env)
+            wait_health(HealthCheck('web UI', 'http://127.0.0.1:8100', 15))
 
     run([str(PYTHON_BIN), '-m', 'app.agent', 'download-files'], cwd=ROOT, check=True, retries=2)
     print('[start] launching LiveKit calendar voice agent...')

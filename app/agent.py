@@ -133,7 +133,8 @@ class CalendarBookingAssistant(Agent):
             '5. IMPORTANT: After checking availability, you MUST read back the full meeting details and ask the user '
             'for explicit confirmation BEFORE calling "book_meeting". Never book without the user saying yes.\n'
             '6. If it is busy, call "suggest_time_slots" and ask the user for a new time.\n'
-            '7. Always explicitly state the outcome of your tool calls to the user.'
+            '7. If the user wants to move or reschedule an existing meeting, use "reschedule_meeting" to find and update it.\n'
+            '8. Always explicitly state the outcome of your tool calls to the user.'
         )
 
     @instructions.setter
@@ -445,6 +446,99 @@ class CalendarBookingAssistant(Agent):
         except Exception as exc:
             print(f'[calendar] unable to rename event: {exc}')
             return 'I could not rename the event on the calendar.'
+
+    @function_tool
+    async def reschedule_meeting(
+        self,
+        context: RunContext,
+        search_query: str,
+        search_window_start_iso: str,
+        search_window_end_iso: str,
+        new_start_iso: str,
+        new_end_iso: str,
+    ) -> str:
+        """Find an existing meeting by title and move it to a new time.
+
+        Args:
+            search_query: Title or keyword to find the existing meeting
+            search_window_start_iso: ISO datetime start of window to search for the meeting
+            search_window_end_iso: ISO datetime end of window to search for the meeting
+            new_start_iso: New meeting start (ISO datetime)
+            new_end_iso: New meeting end (ISO datetime)
+        """
+        missing = self._missing_fields(
+            search_query=search_query,
+            search_window_start_iso=search_window_start_iso,
+            search_window_end_iso=search_window_end_iso,
+            new_start_iso=new_start_iso,
+            new_end_iso=new_end_iso,
+        )
+        if missing:
+            return f"Missing required details: {', '.join(missing)}."
+
+        window_start, ws_err = self._parse_dt_or_error(search_window_start_iso, 'search_window_start_iso')
+        window_end, we_err = self._parse_dt_or_error(search_window_end_iso, 'search_window_end_iso')
+        new_start, ns_err = self._parse_dt_or_error(new_start_iso, 'new_start_iso')
+        new_end, ne_err = self._parse_dt_or_error(new_end_iso, 'new_end_iso')
+        for err in [ws_err, we_err, ns_err, ne_err]:
+            if err:
+                return err
+
+        validation_error = self._validate_future_window(new_start, new_end)
+        if validation_error:
+            return validation_error
+
+        # Find the event
+        try:
+            events = await self._calendar_call(
+                'find event to reschedule',
+                self.calendar.find_events,
+                window_start,
+                window_end,
+                search_query,
+            )
+        except Exception as exc:
+            print(f'[calendar] unable to search events: {exc}')
+            return 'Calendar search failed. Please try again.'
+
+        if not events:
+            return f'No event matching "{search_query}" found in that time window.'
+
+        target_event = events[0]
+        event_id = target_event.get('id')
+        event_title = target_event.get('summary', 'Untitled')
+
+        # Check new time is free
+        try:
+            is_free = await self._calendar_call('check new time', self.calendar.is_free, new_start, new_end)
+        except Exception as exc:
+            print(f'[calendar] unable to check availability for reschedule: {exc}')
+            return 'Could not check the new time slot. Please try again.'
+
+        if not is_free:
+            return f'The new time slot is not available. Try "suggest_time_slots" to find open times.'
+
+        # Move the event
+        try:
+            updated = await self._calendar_call(
+                'reschedule event',
+                self.calendar.update_event_time,
+                event_id,
+                new_start,
+                new_end,
+            )
+        except Exception as exc:
+            print(f'[calendar] unable to reschedule event: {exc}')
+            return 'Could not reschedule the event. Please try again.'
+
+        self.last_booked_event_id = event_id
+        self.last_booked_title = event_title
+
+        return (
+            f'Successfully rescheduled "{event_title}" to '
+            f'{new_start.strftime("%A, %B %d %Y, %I:%M %p")} - '
+            f'{new_end.strftime("%I:%M %p")}.'
+        )
 
 
 async def entrypoint(ctx: agents.JobContext):
