@@ -99,26 +99,8 @@ def build_tts():
 
 class CalendarBookingAssistant(Agent):
     def __init__(self):
-        now = datetime.now(ZoneInfo(GOOGLE_TIMEZONE))
-        today_iso = now.date().isoformat()
-        super().__init__(
-            instructions=(
-                '/no_think\n'
-                'You are a highly efficient real-time voice calendar booking assistant.\n'
-                f'CRITICAL DATE INFO: The current date and time is {now.strftime("%A, %B %d %Y, %I:%M %p")} '
-                f'in timezone {GOOGLE_TIMEZONE}. \n'
-                f'The date for TODAY is exactly "{today_iso}". If the user says "today", you MUST use "{today_iso}" in your tool arguments.\n'
-                'Never use dates from the past (like 2024 or 2025) unless explicitly requested. \n\n'
-                'RULES FOR INTERACTION:\n'
-                '1. Keep your replies extremely concise and conversational (under one sentence). Do not use Markdown.\n'
-                '2. You have access to TOOLS. You MUST use them to perform actions.\n'
-                '3. When the user asks to schedule a meeting, you must gather the title, start date/time, and duration.\n'
-                '4. Once you have the details, you MUST call the "check_availability" tool to confirm the time slot is free.\n'
-                '5. If it is free, call the "book_meeting" tool to schedule it.\n'
-                '6. If it is busy, call "suggest_time_slots" and ask the user for a new time.\n'
-                '7. Always explicitly state the outcome of your tool calls to the user.'
-            )
-        )
+        # Pass empty string; the property below provides fresh instructions on every access
+        super().__init__(instructions='')
         self.calendar = GoogleCalendarService(
             service_account_file=GOOGLE_SERVICE_ACCOUNT_FILE,
             calendar_id=GOOGLE_CALENDAR_ID,
@@ -126,6 +108,38 @@ class CalendarBookingAssistant(Agent):
         )
         self.last_booked_event_id: str | None = None
         self.last_booked_title: str | None = None
+
+    @property
+    def instructions(self):
+        """Recomputed on every access so the LLM always sees the current date/time."""
+        now = datetime.now(ZoneInfo(GOOGLE_TIMEZONE))
+        today_iso = now.date().isoformat()
+
+        # Only include /no_think for Qwen-family models that support it
+        prefix = '/no_think\n' if 'qwen' in LLM_MODEL.lower() else ''
+
+        return (
+            f'{prefix}'
+            'You are a highly efficient real-time voice calendar booking assistant.\n'
+            f'CRITICAL DATE INFO: The current date and time is {now.strftime("%A, %B %d %Y, %I:%M %p")} '
+            f'in timezone {GOOGLE_TIMEZONE}. \n'
+            f'The date for TODAY is exactly "{today_iso}". If the user says "today", you MUST use "{today_iso}" in your tool arguments.\n'
+            'Never use dates from the past (like 2024 or 2025) unless explicitly requested. \n\n'
+            'RULES FOR INTERACTION:\n'
+            '1. Keep your replies extremely concise and conversational (under one sentence). Do not use Markdown.\n'
+            '2. You have access to TOOLS. You MUST use them to perform actions.\n'
+            '3. When the user asks to schedule a meeting, you must gather the title, start date/time, and duration.\n'
+            '4. Once you have the details, you MUST call the "check_availability" tool to confirm the time slot is free.\n'
+            '5. IMPORTANT: After checking availability, you MUST read back the full meeting details and ask the user '
+            'for explicit confirmation BEFORE calling "book_meeting". Never book without the user saying yes.\n'
+            '6. If it is busy, call "suggest_time_slots" and ask the user for a new time.\n'
+            '7. Always explicitly state the outcome of your tool calls to the user.'
+        )
+
+    @instructions.setter
+    def instructions(self, value):
+        # Ignore writes from the parent __init__; the getter always returns fresh instructions.
+        pass
 
     def _parse_dt(self, iso_text: str) -> datetime:
         dt = datetime.fromisoformat(iso_text)
@@ -438,7 +452,7 @@ async def entrypoint(ctx: agents.JobContext):
         stt=build_stt(),
         llm=build_llm(),
         tts=build_tts(),
-        vad=silero.VAD.load(),
+        vad=ctx.proc.userdata['vad'],
         aec_warmup_duration=0.8,
         conn_options=SessionConnectOptions(
             stt_conn_options=APIConnectOptions(timeout=60.0, max_retry=2),

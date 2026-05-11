@@ -14,7 +14,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
 LLM_PROVIDER = os.getenv('LLM_PROVIDER', 'openai').lower()
 LLM_MODEL = os.getenv('LLM_MODEL', 'gpt-4.1-mini')
 LLM_REQUEST_TIMEOUT_SECONDS = float(os.getenv('LLM_REQUEST_TIMEOUT_SECONDS', '180'))
-LLM_MAX_COMPLETION_TOKENS = int(os.getenv('LLM_MAX_COMPLETION_TOKENS', '80'))
+LLM_MAX_COMPLETION_TOKENS = int(os.getenv('LLM_MAX_COMPLETION_TOKENS', '512'))
 STT_PROVIDER = os.getenv('STT_PROVIDER', 'deepgram').lower()
 TTS_PROVIDER = os.getenv('TTS_PROVIDER', 'openai').lower()
 

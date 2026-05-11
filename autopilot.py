@@ -28,7 +28,7 @@ DEFAULTS: Dict[str, str] = {
     'LOCAL_LLM_BASE_URL': 'http://127.0.0.1:1234/v1',
     'LOCAL_LLM_API_KEY': 'lm-studio',
     'LLM_REQUEST_TIMEOUT_SECONDS': '45',
-    'LLM_MAX_COMPLETION_TOKENS': '80',
+    'LLM_MAX_COMPLETION_TOKENS': '512',
     'LOCAL_STT_BASE_URL': 'http://127.0.0.1:8001/v1',
     'LOCAL_STT_API_KEY': 'local-stt',
     'LOCAL_STT_MODEL': 'whisper-1',
@@ -103,18 +103,33 @@ def pip_install():
 
 def ensure_env_file():
     env_path = ROOT / '.env'
-    current: Dict[str, str] = {}
     if env_path.exists():
-        for raw in env_path.read_text().splitlines():
+        # Preserve existing .env content entirely; only append missing keys
+        existing_text = env_path.read_text()
+        existing_keys: set = set()
+        for raw in existing_text.splitlines():
             line = raw.strip()
             if not line or line.startswith('#') or '=' not in line:
                 continue
-            k, v = line.split('=', 1)
-            current[k.strip()] = v.strip()
-    for k, v in DEFAULTS.items():
-        current.setdefault(k, v)
-    env_path.write_text('\n'.join(f'{k}={v}' for k, v in current.items()) + '\n')
-    print(f'[setup] wrote env config: {env_path}')
+            k, _ = line.split('=', 1)
+            existing_keys.add(k.strip())
+
+        missing_lines = []
+        for k, v in DEFAULTS.items():
+            if k not in existing_keys:
+                missing_lines.append(f'{k}={v}')
+
+        if missing_lines:
+            with open(env_path, 'a') as f:
+                f.write('\n# Auto-appended defaults\n')
+                f.write('\n'.join(missing_lines) + '\n')
+            print(f'[setup] appended {len(missing_lines)} missing keys to {env_path}')
+        else:
+            print(f'[setup] env config is up to date: {env_path}')
+    else:
+        # No .env exists; create one from defaults
+        env_path.write_text('\n'.join(f'{k}={v}' for k, v in DEFAULTS.items()) + '\n')
+        print(f'[setup] created env config: {env_path}')
 
 
 def http_ok(url: str, timeout_sec: int = 2) -> bool:
