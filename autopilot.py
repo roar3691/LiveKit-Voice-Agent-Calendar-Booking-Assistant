@@ -47,7 +47,7 @@ DEFAULTS: Dict[str, str] = {
     # piper
     'PIPER_MODEL_PATH': str(ROOT / 'models' / 'en_US-lessac-high.onnx'),
     # tts backend: 'qwen3' (neural, high quality) or 'piper' (lightweight)
-    'TTS_BACKEND': 'qwen3',
+    'TTS_BACKEND': 'piper',
     'QWEN3_TTS_MODEL': 'mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit',
 }
 

@@ -1,0 +1,867 @@
+{
+  "resourceMetrics": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.39.1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "livekit-agents"
+            }
+          },
+          {
+            "key": "room_id",
+            "value": {
+              "stringValue": "RM_zN8BUTk9ecKN"
+            }
+          },
+          {
+            "key": "job_id",
+            "value": {
+              "stringValue": "AJ_tr6PXZvWM25w"
+            }
+          }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": {
+            "name": "livekit-agents"
+          },
+          "metrics": [
+            {
+              "name": "lk.agents.usage.tts_characters",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561910266895000",
+                    "timeUnixNano": "1778561922796388000",
+                    "asInt": "154"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561910266926000",
+                    "timeUnixNano": "1778561922796388000",
+                    "asDouble": 9.973000000000003
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561953205998000",
+                    "timeUnixNano": "1778561983330212000",
+                    "asDouble": 32.54275000000001
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562013777047000",
+                    "timeUnixNano": "1778562043864346000",
+                    "asDouble": 17.774875000000005
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562074083063000",
+                    "timeUnixNano": "1778562104620191000",
+                    "asDouble": 24.90345833333334
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562135025096000",
+                    "timeUnixNano": "1778562165702577000",
+                    "asDouble": 1.8808333333333334
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562165702577000",
+                    "timeUnixNano": "1778562195997027000",
+                    "asDouble": 21.536499999999982
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_DELTA",
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "lk.agents.usage.stt_audio_duration",
+              "unit": "s",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561877662193000",
+                    "timeUnixNano": "1778561892450873000",
+                    "asDouble": 1.3
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561922796388000",
+                    "timeUnixNano": "1778561953205998000",
+                    "asDouble": 3.412
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561983330212000",
+                    "timeUnixNano": "1778562013777047000",
+                    "asDouble": 6.548
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562043864346000",
+                    "timeUnixNano": "1778562074083063000",
+                    "asDouble": 4.66
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562104620191000",
+                    "timeUnixNano": "1778562135025096000",
+                    "asDouble": 1.652
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_DELTA",
+                "isMonotonic": true
+              }
+            },
+            {
+              "name": "lk.agents.usage.llm_input_tokens",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561909615280000",
+                    "timeUnixNano": "1778561922796388000",
+                    "asInt": "1473"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561909615341000",
+                    "timeUnixNano": "1778561922796388000",
+                    "asInt": "139"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778561953205998000",
+                    "timeUnixNano": "1778561983330212000",
+                    "asInt": "595"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562013777047000",
+                    "timeUnixNano": "1778562043864346000",
+                    "asInt": "142"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562074083063000",
+                    "timeUnixNano": "1778562104620191000",
+                    "asInt": "231"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562135025096000",
+                    "timeUnixNano": "1778562165702577000",
+                    "asInt": "266"
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      },
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562165702577000",
+                    "timeUnixNano": "1778562195997027000",
+                    "asInt": "212"
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_DELTA",
+                "isMonotonic": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.39.1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "livekit-agents"
+            }
+          },
+          {
+            "key": "room_id",
+            "value": {
+              "stringValue": "RM_zN8BUTk9ecKN"
+            }
+          },
+          {
+            "key": "job_id",
+            "value": {
+              "stringValue": "AJ_tr6PXZvWM25w"
+            }
+          }
+        ]
+      },
+      "scopeMetrics": [
+        {
+          "scope": {
+            "name": "livekit-agents"
+          },
+          "metrics": [
+            {
+              "name": "lk.agents.turn.transcription_delay",
+              "description": "Time from end of speech to transcript available",
+              "unit": "s",
+              "histogram": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      },
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562202389868000",
+                    "timeUnixNano": "1778562206754472000",
+                    "count": "5",
+                    "sum": 4.1360838413238525,
+                    "bucketCounts": [
+                      "0",
+                      "5",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0,
+                      5,
+                      10,
+                      25,
+                      50,
+                      75,
+                      100,
+                      250,
+                      500,
+                      750,
+                      1000,
+                      2500,
+                      5000,
+                      7500,
+                      10000
+                    ],
+                    "min": 0.7601771354675293,
+                    "max": 0.8802402019500732
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      },
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562202391096000",
+                    "timeUnixNano": "1778562206754472000",
+                    "count": "5",
+                    "sum": 4.1397788524627686,
+                    "bucketCounts": [
+                      "0",
+                      "5",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0,
+                      5,
+                      10,
+                      25,
+                      50,
+                      75,
+                      100,
+                      250,
+                      500,
+                      750,
+                      1000,
+                      2500,
+                      5000,
+                      7500,
+                      10000
+                    ],
+                    "min": 0.7616910934448242,
+                    "max": 0.8815929889678955
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "whisper-1"
+                        }
+                      },
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8001"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562202391141000",
+                    "timeUnixNano": "1778562206754472000",
+                    "count": "5",
+                    "sum": 0.000006499998562503606,
+                    "bucketCounts": [
+                      "0",
+                      "5",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0,
+                      5,
+                      10,
+                      25,
+                      50,
+                      75,
+                      100,
+                      250,
+                      500,
+                      750,
+                      1000,
+                      2500,
+                      5000,
+                      7500,
+                      10000
+                    ],
+                    "min": 7.499984349124134e-7,
+                    "max": 0.0000016670019249431789
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_DELTA"
+              }
+            },
+            {
+              "name": "lk.agents.turn.e2e_latency",
+              "description": "End-to-end turn latency",
+              "unit": "s",
+              "histogram": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      },
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562202391431000",
+                    "timeUnixNano": "1778562206754472000",
+                    "count": "4",
+                    "sum": 107.62852811813354,
+                    "bucketCounts": [
+                      "0",
+                      "0",
+                      "0",
+                      "1",
+                      "3",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0,
+                      5,
+                      10,
+                      25,
+                      50,
+                      75,
+                      100,
+                      250,
+                      500,
+                      750,
+                      1000,
+                      2500,
+                      5000,
+                      7500,
+                      10000
+                    ],
+                    "min": 20.148993015289307,
+                    "max": 33.120540142059326
+                  },
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled"
+                        }
+                      },
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:1234"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562202391460000",
+                    "timeUnixNano": "1778562206754472000",
+                    "count": "7",
+                    "sum": 153.4688512079956,
+                    "bucketCounts": [
+                      "0",
+                      "0",
+                      "0",
+                      "5",
+                      "2",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0,
+                      5,
+                      10,
+                      25,
+                      50,
+                      75,
+                      100,
+                      250,
+                      500,
+                      750,
+                      1000,
+                      2500,
+                      5000,
+                      7500,
+                      10000
+                    ],
+                    "min": 14.18381454199698,
+                    "max": 30.628117083004327
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_DELTA"
+              }
+            },
+            {
+              "name": "lk.agents.turn.tts_ttfb",
+              "description": "Pipeline-level TTS time to first byte",
+              "unit": "s",
+              "histogram": {
+                "dataPoints": [
+                  {
+                    "attributes": [
+                      {
+                        "key": "model_name",
+                        "value": {
+                          "stringValue": "tts-1"
+                        }
+                      },
+                      {
+                        "key": "model_provider",
+                        "value": {
+                          "stringValue": "127.0.0.1:8002"
+                        }
+                      }
+                    ],
+                    "startTimeUnixNano": "1778562202391473000",
+                    "timeUnixNano": "1778562206754472000",
+                    "count": "6",
+                    "sum": 12.262604540999746,
+                    "bucketCounts": [
+                      "0",
+                      "6",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0",
+                      "0"
+                    ],
+                    "explicitBounds": [
+                      0,
+                      5,
+                      10,
+                      25,
+                      50,
+                      75,
+                      100,
+                      250,
+                      500,
+                      750,
+                      1000,
+                      2500,
+                      5000,
+                      7500,
+                      10000
+                    ],
+                    "min": 1.7222957499980112,
+                    "max": 2.361699832996237
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_DELTA"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

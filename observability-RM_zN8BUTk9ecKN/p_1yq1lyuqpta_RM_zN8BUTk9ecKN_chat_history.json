@@ -1,0 +1,343 @@
+{
+  "items": [
+    {
+      "id": "item_5ebfacc37505",
+      "type": "agent_handoff",
+      "new_agent_id": "calendar_booking_assistant",
+      "created_at": 1778561862.4165592
+    },
+    {
+      "id": "item_2ab89a18368c",
+      "type": "message",
+      "role": "user",
+      "content": [
+        "Hello"
+      ],
+      "interrupted": false,
+      "transcript_confidence": 0.0,
+      "extra": {},
+      "metrics": {
+        "stt_metadata": {
+          "model_name": "whisper-1",
+          "model_provider": "127.0.0.1:8001"
+        },
+        "started_speaking_at": 1778561876.6897302,
+        "stopped_speaking_at": 1778561876.905104,
+        "transcription_delay": 0.7601771354675293,
+        "end_of_turn_delay": 0.7616910934448242,
+        "on_user_turn_completed_delay": 1.2079981388524175e-06
+      },
+      "created_at": 1778561877.668246
+    },
+    {
+      "id": "item_ffa340c3193e",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\nHello! I'm your calendar booking assistant. How can I help you today? If you'd like to schedule a meeting, just let me know what day and time works for you."
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "started_speaking_at": 1778561910.025644,
+        "stopped_speaking_at": 1778561920.172319,
+        "llm_node_ttft": 30.628117083004327,
+        "tts_node_ttfb": 1.7222957499980112,
+        "playback_latency": 0.0010459423065185547,
+        "e2e_latency": 33.120540142059326,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778561877.686526
+    },
+    {
+      "id": "item_2686da1b866e",
+      "type": "message",
+      "role": "user",
+      "content": [
+        "Can you schedule a meeting at 8 p.m. today?"
+      ],
+      "interrupted": false,
+      "transcript_confidence": 0.0,
+      "extra": {},
+      "metrics": {
+        "stt_metadata": {
+          "model_name": "whisper-1",
+          "model_provider": "127.0.0.1:8001"
+        },
+        "started_speaking_at": 1778561923.3408952,
+        "stopped_speaking_at": 1778561925.703608,
+        "transcription_delay": 0.8260188102722168,
+        "end_of_turn_delay": 0.8262250423431396,
+        "on_user_turn_completed_delay": 1.4160032151266932e-06
+      },
+      "created_at": 1778561926.5302951
+    },
+    {
+      "id": "item_940bd0fbdc5c",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\nI'll check if 8 p.m. today is available for a meeting. Let me verify that time slot first.\n\n"
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "started_speaking_at": 1778561953.658544,
+        "stopped_speaking_at": 1778561960.1987782,
+        "llm_node_ttft": 25.150730333996762,
+        "tts_node_ttfb": 1.9754831660029595,
+        "playback_latency": 0.0004992485046386719,
+        "e2e_latency": 27.954936027526855,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778561926.5470872
+    },
+    {
+      "id": "item_940bd0fbdc5c/fnc_0",
+      "type": "function_call",
+      "call_id": "696954898",
+      "arguments": "{\"requested_start_iso\": \"2026-05-12T20:00:00+05:30\", \"requested_end_iso\": \"2026-05-12T21:00:00+05:30\"}",
+      "name": "check_availability",
+      "created_at": 1778561956.177687,
+      "extra": {}
+    },
+    {
+      "id": "item_e00b0ede920f",
+      "type": "function_call_output",
+      "name": "check_availability",
+      "call_id": "696954898",
+      "output": "AVAILABLE",
+      "is_error": false,
+      "created_at": 1778561957.0645618
+    },
+    {
+      "id": "item_4187df456980",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\nGreat news! 8 p.m. today is available for a meeting. \n\nTo schedule the meeting, I need a few more details:\n\n1. **What should the meeting title be?** (e.g., \"Team Standup\", \"Project Review\", etc.)\n\n2. **How long should the meeting be?** (in minutes)\n\n3. **Who should I invite to the meeting?** (please provide an email address)\n\nOnce you share these details, I'll book the meeting for you!"
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "started_speaking_at": 1778561976.2223191,
+        "stopped_speaking_at": 1778562002.256742,
+        "llm_node_ttft": 14.18381454199698,
+        "tts_node_ttfb": 1.8220712500042282,
+        "playback_latency": 0.00024008750915527344,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778561960.236664
+    },
+    {
+      "id": "item_420eccc0e93f",
+      "type": "message",
+      "role": "user",
+      "content": [
+        "So the meeting should be called as dinner and it should be like normal timing."
+      ],
+      "interrupted": false,
+      "transcript_confidence": 0.0,
+      "extra": {},
+      "metrics": {
+        "stt_metadata": {
+          "model_name": "whisper-1",
+          "model_provider": "127.0.0.1:8001"
+        },
+        "started_speaking_at": 1778562005.038062,
+        "stopped_speaking_at": 1778562010.50485,
+        "transcription_delay": 0.8802402019500732,
+        "end_of_turn_delay": 0.8815929889678955,
+        "on_user_turn_completed_delay": 1.4589968486689031e-06
+      },
+      "created_at": 1778562011.387391
+    },
+    {
+      "id": "item_ab4a3bb17edf",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\nPerfect! So the meeting is called \"dinner\" and you want normal timing, which I assume means 1 hour.\n\nJust one more thing I need: **Who should I invite to the dinner meeting?** Please provide an email address for the attendee.\n\nOnce you give me that, I'll book it for 8 p.m. today!"
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "started_speaking_at": 1778562030.653843,
+        "stopped_speaking_at": 1778562048.4510489,
+        "llm_node_ttft": 16.895001208002213,
+        "tts_node_ttfb": 2.361699832996237,
+        "playback_latency": 0.0016069412231445312,
+        "e2e_latency": 20.148993015289307,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778562011.444152
+    },
+    {
+      "id": "item_5fda144dca7d",
+      "type": "message",
+      "role": "user",
+      "content": [
+        "There are no invities just scheduled in my calendar."
+      ],
+      "interrupted": false,
+      "transcript_confidence": 0.0,
+      "extra": {},
+      "metrics": {
+        "stt_metadata": {
+          "model_name": "whisper-1",
+          "model_provider": "127.0.0.1:8001"
+        },
+        "started_speaking_at": 1778562051.94294,
+        "stopped_speaking_at": 1778562055.554259,
+        "transcription_delay": 0.8618547916412354,
+        "end_of_turn_delay": 0.8621947765350342,
+        "on_user_turn_completed_delay": 7.499984349124134e-07
+      },
+      "created_at": 1778562056.4171178
+    },
+    {
+      "id": "item_40f269ee9e72",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\nI understand - there are no invitees, just a meeting scheduled in your own calendar.\n\nThe booking system requires an attendee email address. Since there are no invitees, would you like me to:\n\n1. **Book the meeting without adding anyone** (just in your calendar)?\n2. **Add yourself as the attendee**?\n\nPlease let me know how you'd like to proceed, and I'll book the dinner meeting for 8 p.m. today!"
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "started_speaking_at": 1778562081.958318,
+        "stopped_speaking_at": 1778562106.8777862,
+        "llm_node_ttft": 23.204702582996106,
+        "tts_node_ttfb": 2.3288373750037863,
+        "playback_latency": 0.0005528926849365234,
+        "e2e_latency": 26.404058933258057,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778562056.479977
+    },
+    {
+      "id": "item_75fd7690507f",
+      "type": "message",
+      "role": "user",
+      "content": [
+        "Yeah, do that."
+      ],
+      "interrupted": false,
+      "transcript_confidence": 0.0,
+      "extra": {},
+      "metrics": {
+        "stt_metadata": {
+          "model_name": "whisper-1",
+          "model_provider": "127.0.0.1:8001"
+        },
+        "started_speaking_at": 1778562107.8863091,
+        "stopped_speaking_at": 1778562108.455481,
+        "transcription_delay": 0.8077929019927979,
+        "end_of_turn_delay": 0.808074951171875,
+        "on_user_turn_completed_delay": 1.6670019249431789e-06
+      },
+      "created_at": 1778562109.2645068
+    },
+    {
+      "id": "item_897a6014fce7",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\n"
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "llm_node_ttft": 23.394160957999702,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778562109.303453
+    },
+    {
+      "id": "item_897a6014fce7/fnc_0",
+      "type": "function_call",
+      "call_id": "489348297",
+      "arguments": "{\"title\": \"dinner\", \"start_iso\": \"2026-05-12T20:00:00+05:30\", \"end_iso\": \"2026-05-12T21:00:00+05:30\", \"description\": \"Dinner meeting scheduled for today at 8 p.m.\", \"attendee_email\": null}",
+      "name": "book_meeting",
+      "created_at": 1778562138.141639,
+      "extra": {}
+    },
+    {
+      "id": "item_27abec75380d",
+      "type": "function_call_output",
+      "name": "book_meeting",
+      "call_id": "489348297",
+      "output": "Meeting booked: dinner, Tuesday May 12 from 08:00 PM to 09:00 PM.",
+      "is_error": false,
+      "created_at": 1778562139.71174
+    },
+    {
+      "id": "item_88b7af20c252",
+      "type": "message",
+      "role": "assistant",
+      "content": [
+        "\n\n## \u2705 Meeting Successfully Booked!\n\n| Detail | Information |\n|--------|-------------|\n| **Title** | dinner |\n| **Date** | Tuesday, May 12, 2026 |\n| **Time** | 8:00 PM to 9:00 PM |\n| **Duration** | 1 hour |\n\nThe dinner meeting has been scheduled in your calendar for today at 8 p.m. The booking is confirmed and ready to go! Enjoy your dinner meeting! \ud83c\udf7d\ufe0f"
+      ],
+      "interrupted": false,
+      "extra": {},
+      "metrics": {
+        "started_speaking_at": 1778562161.785922,
+        "stopped_speaking_at": 1778562189.728508,
+        "llm_node_ttft": 20.012324499999522,
+        "tts_node_ttfb": 2.0522171669945237,
+        "playback_latency": 0.0006551742553710938,
+        "llm_metadata": {
+          "model_name": "mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled",
+          "model_provider": "127.0.0.1:1234"
+        },
+        "tts_metadata": {
+          "model_name": "tts-1",
+          "model_provider": "127.0.0.1:8002"
+        }
+      },
+      "created_at": 1778562139.745729
+    }
+  ]
+}

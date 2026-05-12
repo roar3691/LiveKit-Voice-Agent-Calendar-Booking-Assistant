@@ -1,0 +1,3557 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.39.1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service"
+            }
+          }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": {
+            "name": "googleapiclient.discovery_cache"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778561862410767104",
+              "observedTimeUnixNano": "1778561862413391000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "file_cache is only supported with oauth2client<4.0.0"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/googleapiclient/discovery_cache/__init__.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "autodetect"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "49"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "googleapiclient.discovery_cache"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "2a883f6c-ee4a-6a6f-7a48-63a7070ed9ea"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "livekit.agents"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778561862411887104",
+              "observedTimeUnixNano": "1778561862413432000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "configuring session recording"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/job.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "init_recording"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "693"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "d7b57b4c-67a2-613b-1c6c-d752bb67076e"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1778561862414700032",
+              "observedTimeUnixNano": "1778561862414741000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "input stream attached"
+              },
+              "attributes": [
+                {
+                  "key": "source",
+                  "value": {
+                    "stringValue": "SOURCE_UNKNOWN"
+                  }
+                },
+                {
+                  "key": "accepted_sources",
+                  "value": {
+                    "arrayValue": {
+                      "values": [
+                        {
+                          "stringValue": "SOURCE_MICROPHONE"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/_input.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "on_attached"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "71"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "22b6adba-60db-6b05-dc73-8796c89cb212"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561862414976000",
+              "observedTimeUnixNano": "1778561862415004000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "input stream detached"
+              },
+              "attributes": [
+                {
+                  "key": "source",
+                  "value": {
+                    "stringValue": "SOURCE_UNKNOWN"
+                  }
+                },
+                {
+                  "key": "accepted_sources",
+                  "value": {
+                    "arrayValue": {
+                      "values": [
+                        {
+                          "stringValue": "SOURCE_MICROPHONE"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/_input.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "on_detached"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "84"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "3e768389-c41c-9963-805a-483abcc6cccc"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561862415035904",
+              "observedTimeUnixNano": "1778561862415056000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "input stream attached"
+              },
+              "attributes": [
+                {
+                  "key": "source",
+                  "value": {
+                    "stringValue": "SOURCE_UNKNOWN"
+                  }
+                },
+                {
+                  "key": "accepted_sources",
+                  "value": {
+                    "arrayValue": {
+                      "values": [
+                        {
+                          "stringValue": "SOURCE_MICROPHONE"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/_input.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "on_attached"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "71"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "26eeb5ac-a0d2-b24a-3ff8-578c7b296f89"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561863110754048",
+              "observedTimeUnixNano": "1778561863111308000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "using audio io: `RoomIO` -> `RecorderIO` -> `AgentSession` -> `RecorderIO` -> `TranscriptSynchronizer` -> `RoomIO`"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/agent_session.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "start"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "827"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "5bffc31f-ebfe-b66d-aff8-59ef6c17eba7"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561863111567104",
+              "observedTimeUnixNano": "1778561863111829000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "using transcript io: `AgentSession` -> `TranscriptSynchronizer` -> `RoomIO`"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/agent_session.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "start"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "842"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "c861909c-fb60-65a8-3ed8-587c4dd0710a"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561863113398016",
+              "observedTimeUnixNano": "1778561863113541000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "start reading stream"
+              },
+              "attributes": [
+                {
+                  "key": "participant",
+                  "value": {
+                    "stringValue": "web-user-1778561859562"
+                  }
+                },
+                {
+                  "key": "source",
+                  "value": {
+                    "stringValue": "SOURCE_MICROPHONE"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/_input.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_forward_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "152"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "2ea51737-849e-592a-b2ab-12c395715a72"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561877663045120",
+              "observedTimeUnixNano": "1778561877665160000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "received user transcript"
+              },
+              "attributes": [
+                {
+                  "key": "user_transcript",
+                  "value": {
+                    "stringValue": "Hello"
+                  }
+                },
+                {
+                  "key": "language",
+                  "value": {
+                    "stringValue": "en"
+                  }
+                },
+                {
+                  "key": "transcript_delay",
+                  "value": {
+                    "doubleValue": 0.7579030990600586
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/audio_recognition.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_stt_event"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "836"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "02138623-7cfe-ff5a-7e20-91df2c0b645c"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561910015188992",
+              "observedTimeUnixNano": "1778561910015524000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "91fe4114-50d1-3346-6dbe-2babf4980bb8"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "cylRUK7uOd0="
+            },
+            {
+              "timeUnixNano": "1778561910026672128",
+              "observedTimeUnixNano": "1778561910026828000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "aec warmup active, disabling interruptions for 0.80s"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/agent_session.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_update_agent_state"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1508"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "f069cf99-81d2-5ba0-e657-d3ebe9d7c18c"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "/htLgKh9z0s="
+            },
+            {
+              "timeUnixNano": "1778561910827608064",
+              "observedTimeUnixNano": "1778561910827696000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "aec warmup expired, re-enabling interruptions"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/agent_session.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_aec_warmup_expired"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1459"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "ebab6b29-4c9a-3169-f338-78baa8f4eca9"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "/htLgKh9z0s="
+            },
+            {
+              "timeUnixNano": "1778561911008777984",
+              "observedTimeUnixNano": "1778561911008863000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "0732848a-7f2e-0b3a-6af7-1250d2e8925a"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "A5hfBH3vCgI="
+            },
+            {
+              "timeUnixNano": "1778561912316338944",
+              "observedTimeUnixNano": "1778561912316624000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "3598739f-cec1-7cf4-bec4-28ab61872c73"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "WnbkSPNwj08="
+            },
+            {
+              "timeUnixNano": "1778561920206692096",
+              "observedTimeUnixNano": "1778561920206764000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "Input is shorter by 36492 samples; silence has been prepended to align the input channel. The resulting recording may not accurately reflect the original audio. This is expected if the input device or audio input is disabled. This warning will only be shown once."
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/recorder_io/recorder_io.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_encode_thread"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "246"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "d89451f9-ab93-8af8-29b7-1ae1ddccf051"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1778561926529518080",
+              "observedTimeUnixNano": "1778561926529588000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "received user transcript"
+              },
+              "attributes": [
+                {
+                  "key": "user_transcript",
+                  "value": {
+                    "stringValue": "Can you schedule a meeting at 8 p.m. today?"
+                  }
+                },
+                {
+                  "key": "language",
+                  "value": {
+                    "stringValue": "en"
+                  }
+                },
+                {
+                  "key": "transcript_delay",
+                  "value": {
+                    "doubleValue": 0.8258991241455078
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/audio_recognition.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_stt_event"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "836"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "c6e8ebbc-ed0c-3da7-fe00-b1f75dab0482"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778561953651324928",
+              "observedTimeUnixNano": "1778561953651982000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "62bbe94f-41b6-eb46-8198-5d0caedf350c"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "i8Ig4sLekc0="
+            },
+            {
+              "timeUnixNano": "1778561954811034112",
+              "observedTimeUnixNano": "1778561954811460000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "c255f5ff-db52-a94b-0cdd-9e1dfb559529"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "ONODaJHSPPs="
+            },
+            {
+              "timeUnixNano": "1778561956177789952",
+              "observedTimeUnixNano": "1778561956178013000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "executing tool"
+              },
+              "attributes": [
+                {
+                  "key": "function",
+                  "value": {
+                    "stringValue": "check_availability"
+                  }
+                },
+                {
+                  "key": "arguments",
+                  "value": {
+                    "kvlistValue": {
+                      "values": [
+                        {
+                          "key": "requested_start_iso",
+                          "value": {
+                            "stringValue": "2026-05-12T20:00:00+05:30"
+                          }
+                        },
+                        {
+                          "key": "requested_end_iso",
+                          "value": {
+                            "stringValue": "2026-05-12T21:00:00+05:30"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "speech_id",
+                  "value": {
+                    "stringValue": "speech_ca72832d69dd"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/generation.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_execute_tools_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "635"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "49d8c5ad-ffbf-06ea-99a0-32fcf5dbcbcd"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "wFB+u5dPCUQ="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "googleapiclient.discovery"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778561956198320896",
+              "observedTimeUnixNano": "1778561956198545000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "URL being requested: GET https://www.googleapis.com/calendar/v3/calendars/raghu.yanala%40gmail.com/events?timeMin=2026-05-12T20%3A00%3A00%2B05%3A30&timeMax=2026-05-12T21%3A00%3A00%2B05%3A30&singleEvents=true&orderBy=startTime&timeZone=Asia%2FKolkata&alt=json"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/googleapiclient/discovery.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "method"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1265"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "googleapiclient.discovery"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "e6e433a1-e69b-bd2f-49f8-95c5ab952e79"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "BcATHR8Pacc="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "google_auth_httplib2"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778561956228762880",
+              "observedTimeUnixNano": "1778561956228840000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "Making request: POST https://oauth2.googleapis.com/token"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/google_auth_httplib2.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "__call__"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "114"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "google_auth_httplib2"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "6ce13b4d-452a-48a3-7c3e-bc7dd30add4c"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "BcATHR8Pacc="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "livekit.agents"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778561957065295104",
+              "observedTimeUnixNano": "1778561957065754000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "tools execution completed"
+              },
+              "attributes": [
+                {
+                  "key": "speech_id",
+                  "value": {
+                    "stringValue": "speech_ca72832d69dd"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/generation.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_execute_tools_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "730"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "51cbadfe-5898-d629-33d3-1d66da994a8d"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "wFB+u5dPCUQ="
+            },
+            {
+              "timeUnixNano": "1778561976216538880",
+              "observedTimeUnixNano": "1778561976217026000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "5cb09546-a853-5ee6-bbce-d13f5b1c269b"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "IUvJ7GBu8qs="
+            },
+            {
+              "timeUnixNano": "1778561977158246912",
+              "observedTimeUnixNano": "1778561977158312000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "a5f5d948-7b63-fd48-2c31-dc94ea9db367"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "am6O4NO9j+o="
+            },
+            {
+              "timeUnixNano": "1778561978205430016",
+              "observedTimeUnixNano": "1778561978205525000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "b92b9b34-d47c-6e86-83b8-0213180b45ac"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "WApTIq5ZCVY="
+            },
+            {
+              "timeUnixNano": "1778561979193434880",
+              "observedTimeUnixNano": "1778561979193706000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "2d91bafb-2304-5ce3-e90b-88eade6f4d19"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "jV7x0OqrWm0="
+            },
+            {
+              "timeUnixNano": "1778561980391102976",
+              "observedTimeUnixNano": "1778561980391441000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "4ad6bbf2-6967-3d9f-2ae3-282d1677d6af"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "arXMKnf4/2A="
+            },
+            {
+              "timeUnixNano": "1778562011383830016",
+              "observedTimeUnixNano": "1778562011384154000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "received user transcript"
+              },
+              "attributes": [
+                {
+                  "key": "user_transcript",
+                  "value": {
+                    "stringValue": "So the meeting should be called as dinner and it should be like normal timing."
+                  }
+                },
+                {
+                  "key": "language",
+                  "value": {
+                    "stringValue": "en"
+                  }
+                },
+                {
+                  "key": "transcript_delay",
+                  "value": {
+                    "doubleValue": 0.8789031505584717
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/audio_recognition.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_stt_event"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "836"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "c1d09d5d-3fc5-2d75-9c41-2a7b8ca89a6b"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562030632901120",
+              "observedTimeUnixNano": "1778562030633797000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "37f50708-1b31-61dd-08c8-80f7c90f0651"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "9w1LEJn86aU="
+            },
+            {
+              "timeUnixNano": "1778562031578321920",
+              "observedTimeUnixNano": "1778562031578437000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "4891cfbe-d6bd-c608-5ee7-0afd6c924a4c"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "4sR33LKlQ/4="
+            },
+            {
+              "timeUnixNano": "1778562032472591104",
+              "observedTimeUnixNano": "1778562032472859000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "e63778f6-534c-bfe8-ff15-d01d9171ace0"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "7dAQvxd570c="
+            },
+            {
+              "timeUnixNano": "1778562033801764096",
+              "observedTimeUnixNano": "1778562033801971000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "5fb0c4f9-d851-851f-5f0e-616e21d54907"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "S/MYzvyBIAU="
+            },
+            {
+              "timeUnixNano": "1778562056415548928",
+              "observedTimeUnixNano": "1778562056415753000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "received user transcript"
+              },
+              "attributes": [
+                {
+                  "key": "user_transcript",
+                  "value": {
+                    "stringValue": "There are no invities just scheduled in my calendar."
+                  }
+                },
+                {
+                  "key": "language",
+                  "value": {
+                    "stringValue": "en"
+                  }
+                },
+                {
+                  "key": "transcript_delay",
+                  "value": {
+                    "doubleValue": 0.8612508773803711
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/audio_recognition.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_stt_event"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "836"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "24e40c2a-88cc-a11a-129d-192260646430"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562081940453888",
+              "observedTimeUnixNano": "1778562081940640000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "0b8e58b8-200f-e76c-54ee-287e91385f83"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "hxXu1EhxPrY="
+            },
+            {
+              "timeUnixNano": "1778562082906867968",
+              "observedTimeUnixNano": "1778562082906928000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "cc1c9077-6b3c-fc6a-e233-0775abcdfafa"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "UP1Mnqr4b8I="
+            },
+            {
+              "timeUnixNano": "1778562083850801920",
+              "observedTimeUnixNano": "1778562083850879000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "5fef0855-453e-3f25-a0b4-5a4aac8ae481"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "ZIGTXWeOvMQ="
+            },
+            {
+              "timeUnixNano": "1778562084701234944",
+              "observedTimeUnixNano": "1778562084701291000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "bda8f13a-4fd9-8375-f9e7-467cb3cfa3f8"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "AbQagghB3Hg="
+            },
+            {
+              "timeUnixNano": "1778562085485244928",
+              "observedTimeUnixNano": "1778562085485304000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "77ded970-7902-c355-39c8-bb9a245dcaa0"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "dFgdNO+ES8g="
+            },
+            {
+              "timeUnixNano": "1778562086368001024",
+              "observedTimeUnixNano": "1778562086368061000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "03ae26f7-11cb-02d6-ab29-89917e89398c"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "E+EBDe2L+Rs="
+            },
+            {
+              "timeUnixNano": "1778562109262653952",
+              "observedTimeUnixNano": "1778562109262847000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "received user transcript"
+              },
+              "attributes": [
+                {
+                  "key": "user_transcript",
+                  "value": {
+                    "stringValue": "Yeah, do that."
+                  }
+                },
+                {
+                  "key": "language",
+                  "value": {
+                    "stringValue": "en"
+                  }
+                },
+                {
+                  "key": "transcript_delay",
+                  "value": {
+                    "doubleValue": 0.8071250915527344
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/audio_recognition.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_stt_event"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "836"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "0ed0cde1-2e2b-46c6-fee5-beae9f8515f0"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562138142136064",
+              "observedTimeUnixNano": "1778562138144159000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "executing tool"
+              },
+              "attributes": [
+                {
+                  "key": "function",
+                  "value": {
+                    "stringValue": "book_meeting"
+                  }
+                },
+                {
+                  "key": "arguments",
+                  "value": {
+                    "kvlistValue": {
+                      "values": [
+                        {
+                          "key": "title",
+                          "value": {
+                            "stringValue": "dinner"
+                          }
+                        },
+                        {
+                          "key": "start_iso",
+                          "value": {
+                            "stringValue": "2026-05-12T20:00:00+05:30"
+                          }
+                        },
+                        {
+                          "key": "end_iso",
+                          "value": {
+                            "stringValue": "2026-05-12T21:00:00+05:30"
+                          }
+                        },
+                        {
+                          "key": "description",
+                          "value": {
+                            "stringValue": "Dinner meeting scheduled for today at 8 p.m."
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "speech_id",
+                  "value": {
+                    "stringValue": "speech_7a4c0017d338"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/generation.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_execute_tools_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "635"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "a37e123b-da5d-8d35-bc88-e191243f680b"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "HsHcg8VXbh8="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "googleapiclient.discovery"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778562138165858048",
+              "observedTimeUnixNano": "1778562138165925000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "URL being requested: GET https://www.googleapis.com/calendar/v3/calendars/raghu.yanala%40gmail.com/events?timeMin=2026-05-12T20%3A00%3A00%2B05%3A30&timeMax=2026-05-12T21%3A00%3A00%2B05%3A30&singleEvents=true&orderBy=startTime&timeZone=Asia%2FKolkata&alt=json"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/googleapiclient/discovery.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "method"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1265"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "googleapiclient.discovery"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "2f034543-697e-9cf3-ed45-e9d0a572df15"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "1RCpYDU2dsM="
+            },
+            {
+              "timeUnixNano": "1778562138713899008",
+              "observedTimeUnixNano": "1778562138714008000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "URL being requested: POST https://www.googleapis.com/calendar/v3/calendars/raghu.yanala%40gmail.com/events?sendUpdates=none&alt=json"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/googleapiclient/discovery.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "method"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1265"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "googleapiclient.discovery"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "d2314bd9-ae1f-3b9a-3027-aab5e8266265"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "1RCpYDU2dsM="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "livekit.agents"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778562139712603904",
+              "observedTimeUnixNano": "1778562139713048000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "tools execution completed"
+              },
+              "attributes": [
+                {
+                  "key": "speech_id",
+                  "value": {
+                    "stringValue": "speech_7a4c0017d338"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/generation.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_execute_tools_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "730"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "8636f201-e0e5-0cb1-0592-e212fb03d062"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "HsHcg8VXbh8="
+            },
+            {
+              "timeUnixNano": "1778562161771341056",
+              "observedTimeUnixNano": "1778562161772280000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "466cea14-edf2-67a6-bbe4-fdb547a84b36"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "y2xutXfJdOQ="
+            },
+            {
+              "timeUnixNano": "1778562168118150912",
+              "observedTimeUnixNano": "1778562168119141000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "68d9e9ed-b2a8-cbc5-8fe2-92d67d627315"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "FSSEpODMJyk="
+            },
+            {
+              "timeUnixNano": "1778562170246531072",
+              "observedTimeUnixNano": "1778562170246604000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "49485756-3480-a279-1867-14f34a7587d1"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "mtgTX/ihzJY="
+            },
+            {
+              "timeUnixNano": "1778562171342825984",
+              "observedTimeUnixNano": "1778562171342894000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "no request_id provided for TTS livekit.plugins.openai.tts.TTS"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/tts/tts.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "initialize"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "776"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "a1ee0f83-58a0-86d7-1b23-233224a5273a"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VmX663q8fEw="
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.39.1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service"
+            }
+          }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": {
+            "name": "livekit.agents"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1778562191783560960",
+              "observedTimeUnixNano": "1778562191784253000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "closing agent session due to participant disconnect (disable via `RoomInputOptions.close_on_disconnect=False`)"
+              },
+              "attributes": [
+                {
+                  "key": "room",
+                  "value": {
+                    "stringValue": "calendar-agent"
+                  }
+                },
+                {
+                  "key": "participant",
+                  "value": {
+                    "stringValue": "web-user-1778561859562"
+                  }
+                },
+                {
+                  "key": "reason",
+                  "value": {
+                    "stringValue": "CLIENT_INITIATED"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/room_io.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_participant_disconnected"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "421"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "718151a2-cc15-27ca-7ba7-585a882815d6"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562191789133056",
+              "observedTimeUnixNano": "1778562191789371000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "stream closed"
+              },
+              "attributes": [
+                {
+                  "key": "participant",
+                  "value": {
+                    "stringValue": "web-user-1778561859562"
+                  }
+                },
+                {
+                  "key": "source",
+                  "value": {
+                    "stringValue": "SOURCE_MICROPHONE"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/_input.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_forward_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "161"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "adf8f725-27b7-7b4a-2297-073c5e0b8ea0"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562191791937024",
+              "observedTimeUnixNano": "1778562191792041000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "input stream detached"
+              },
+              "attributes": [
+                {
+                  "key": "participant",
+                  "value": {
+                    "stringValue": "web-user-1778561859562"
+                  }
+                },
+                {
+                  "key": "source",
+                  "value": {
+                    "stringValue": "SOURCE_UNKNOWN"
+                  }
+                },
+                {
+                  "key": "accepted_sources",
+                  "value": {
+                    "arrayValue": {
+                      "values": [
+                        {
+                          "stringValue": "SOURCE_MICROPHONE"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/room_io/_input.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "on_detached"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "84"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "d6b09d5a-112a-ef33-ac7e-cc66b0e19d30"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562193830830080",
+              "observedTimeUnixNano": "1778562193831071000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "session closed"
+              },
+              "attributes": [
+                {
+                  "key": "reason",
+                  "value": {
+                    "stringValue": "participant_disconnected"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/voice/agent_session.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_aclose_impl"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1011"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "6208aa80-d068-e43c-9352-f907982dc4c7"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "wDTG9lGVl5tyL6utYpIXfw==",
+              "spanId": "VjKFiFWg2PE="
+            },
+            {
+              "timeUnixNano": "1778562202462706944",
+              "observedTimeUnixNano": "1778562202462975000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "http_session(): creating a new httpclient ctx"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/utils/http_context.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_new_session"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "20"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "46759dd7-485f-9467-235a-614219541ce6"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1778562202511809024",
+              "observedTimeUnixNano": "1778562202511882000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "uploading session report to LiveKit Cloud"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/telemetry/traces.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_upload_session_report"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "614"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "9b993de4-fad8-338a-6eb2-cf6963e96a08"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1778562206706636032",
+              "observedTimeUnixNano": "1778562206707052000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "finished uploading"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/telemetry/traces.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_upload_session_report"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "632"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "aa661d13-60e2-1f67-c5ad-8a67cddc9370"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1778562206707674880",
+              "observedTimeUnixNano": "1778562206707744000",
+              "severityNumber": "SEVERITY_NUMBER_DEBUG",
+              "severityText": "DEBUG",
+              "body": {
+                "stringValue": "shutting down job task"
+              },
+              "attributes": [
+                {
+                  "key": "reason",
+                  "value": {
+                    "stringValue": ""
+                  }
+                },
+                {
+                  "key": "user_initiated",
+                  "value": {
+                    "boolValue": false
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/yanalaraghuvasmhireddy/Documents/New project/livekit-calendar-agent/.venv/lib/python3.11/site-packages/livekit/agents/ipc/job_proc_lazy_main.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_run_job_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "387"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_zN8BUTk9ecKN"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_tr6PXZvWM25w"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "c9061865-957b-c3c6-4829-968a4eeef9b6"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
