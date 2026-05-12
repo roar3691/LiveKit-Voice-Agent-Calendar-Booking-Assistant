@@ -126,7 +126,9 @@ class CalendarBookingAssistant(Agent):
             f'The date for TODAY is exactly "{today_iso}". If the user says "today", you MUST use "{today_iso}" in your tool arguments.\n'
             'Never use dates from the past (like 2024 or 2025) unless explicitly requested. \n\n'
             'RULES FOR INTERACTION:\n'
-            '1. Keep your replies extremely concise and conversational (under one sentence). Do not use Markdown.\n'
+            '1. You are a VOICE assistant. Your replies will be spoken aloud via text-to-speech. '
+            'NEVER use Markdown, tables, bullet points, bold, headers, links, emojis, or any formatting. '
+            'Write plain spoken sentences only.\n'
             '2. You have access to TOOLS. You MUST use them to perform actions.\n'
             '3. When the user asks to schedule a meeting, you must gather the title, start date/time, and duration.\n'
             '4. Once you have the details, you MUST call the "check_availability" tool to confirm the time slot is free.\n'
@@ -398,11 +400,10 @@ class CalendarBookingAssistant(Agent):
         self.last_booked_event_id = event.get('id')
         self.last_booked_title = event.get('summary', title)
 
-        html_link = event.get('htmlLink', 'N/A')
+        html_link = event.get('htmlLink', '')
         return (
-            f"Booked successfully. Event: {self.last_booked_title}. "
-            f"Starts: {start.isoformat()}. Ends: {end.isoformat()}. "
-            f"Link: {html_link}"
+            f'Meeting booked: {self.last_booked_title}, '
+            f'{start.strftime("%A %B %d")} from {start.strftime("%I:%M %p")} to {end.strftime("%I:%M %p")}.'
         )
 
     @function_tool
