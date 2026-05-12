@@ -541,6 +541,10 @@ class CalendarBookingAssistant(Agent):
         )
 
 
+server = agents.AgentServer()
+
+
+@server.rtc_session(agent_name='calendar-agent')
 async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
         stt=build_stt(),
@@ -585,13 +589,13 @@ async def entrypoint(ctx: agents.JobContext):
     session.on('speech_created', on_speech_created)
     session.on('agent_state_changed', on_agent_state_changed)
     session.on('error', on_error)
-    
+
     await session.start(room=ctx.room, agent=assistant)
-    session.say(
-        'Hi, I can help schedule your appointment. What would you like to book today?',
-        allow_interruptions=True,
+    await session.generate_reply(
+        instructions='Greet the user and offer to help schedule, reschedule, or manage their calendar appointments.'
     )
 
 
 if __name__ == '__main__':
-    agents.cli.run_app(agents.WorkerOptions(entrypoint_fnc=entrypoint, prewarm_fnc=prewarm))
+    agents.cli.run_app(server)
+

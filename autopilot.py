@@ -431,8 +431,17 @@ def run_main():
             wait_health(HealthCheck('web UI', 'http://127.0.0.1:8100', 15))
 
     run([str(PYTHON_BIN), '-m', 'app.agent', 'download-files'], cwd=ROOT, check=True, retries=2)
-    print('[start] launching LiveKit calendar voice agent...')
-    run([str(PYTHON_BIN), '-m', 'app.agent', 'console'], cwd=ROOT, check=True)
+
+    # Determine launch mode: if LiveKit credentials exist, use 'dev' mode (connects to
+    # LiveKit server for Web UI support). Otherwise fall back to 'console' mode.
+    livekit_url = os.getenv('LIVEKIT_URL', '').strip()
+    if livekit_url and livekit_url != 'ws://localhost:7880':
+        print(f'[start] launching agent in dev mode (connected to {livekit_url})...')
+        print('[info]  open the LiveKit Agents Playground or http://127.0.0.1:8100 to interact via browser')
+        run([str(PYTHON_BIN), '-m', 'app.agent', 'dev'], cwd=ROOT, check=True)
+    else:
+        print('[start] launching agent in console mode (local mic/speaker)...')
+        run([str(PYTHON_BIN), '-m', 'app.agent', 'console'], cwd=ROOT, check=True)
 
 
 def main():

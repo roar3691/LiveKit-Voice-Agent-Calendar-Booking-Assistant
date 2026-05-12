@@ -44,6 +44,11 @@ async def get_token(request: web.Request):
                 room=ROOM_NAME,
             )
         )
+        .with_room_config(
+            api.RoomConfiguration(
+                agents=[api.RoomAgentDispatch(agent_name='calendar-agent')],
+            )
+        )
         .to_jwt()
     )
     return web.json_response({'token': token, 'room': ROOM_NAME})
