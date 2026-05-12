@@ -50,3 +50,5 @@ models/
 # Logs and Audio Tests
 *.txt
 *.wav
+models/*.onnx
+models/*.bin

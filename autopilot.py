@@ -35,7 +35,7 @@ DEFAULTS: Dict[str, str] = {
     'LOCAL_TTS_BASE_URL': 'http://127.0.0.1:8002/v1',
     'LOCAL_TTS_API_KEY': 'local-tts',
     'LOCAL_TTS_MODEL': 'piper',
-    'LOCAL_TTS_VOICE': 'en_US-lessac-medium',
+    'LOCAL_TTS_VOICE': 'en_US-lessac-high',
     'GOOGLE_SERVICE_ACCOUNT_FILE': 'service_account.json',
     'GOOGLE_CALENDAR_ID': 'primary',
     'GOOGLE_TIMEZONE': 'Asia/Kolkata',
@@ -45,7 +45,7 @@ DEFAULTS: Dict[str, str] = {
     'WHISPERCPP_PORT': '8080',
     'WHISPERCPP_MODEL_PATH': str(ROOT / 'models' / 'ggml-base.en.bin'),
     # piper
-    'PIPER_MODEL_PATH': str(ROOT / 'models' / 'en_US-lessac-medium.onnx'),
+    'PIPER_MODEL_PATH': str(ROOT / 'models' / 'en_US-lessac-high.onnx'),
 }
 
 PIP_BOOTSTRAP = ['--upgrade', 'pip', 'setuptools', 'wheel']
