@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import re
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -97,6 +98,22 @@ def build_tts():
     return openai.TTS(voice=OPENAI_TTS_VOICE, api_key=OPENAI_API_KEY or None, base_url=OPENAI_BASE_URL or None)
 
 
+def strip_markdown(text: str) -> str:
+    """Remove Markdown formatting so TTS speaks clean text."""
+    text = re.sub(r'#{1,6}\s*', '', text)           # ## headers
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)     # **bold**
+    text = re.sub(r'\*(.*?)\*', r'\1', text)          # *italic*
+    text = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text)   # [link](url)
+    text = re.sub(r'^[\-\*]\s+', '', text, flags=re.MULTILINE)  # bullet points
+    text = re.sub(r'^\d+\.\s+', '', text, flags=re.MULTILINE)   # numbered lists
+    text = re.sub(r'\|', ', ', text)                  # table separators
+    text = re.sub(r'^[\-=]{3,}$', '', text, flags=re.MULTILINE)  # horizontal rules
+    text = re.sub(r'`{1,3}(.*?)`{1,3}', r'\1', text)  # `code`
+    text = re.sub(r'[✅📅🎉🗓️📝❌⚠️🔗📌💡🎯🔔🍽️]', '', text)  # emojis
+    text = re.sub(r'\n{3,}', '\n\n', text)            # collapse newlines
+    return text.strip()
+
+
 class CalendarBookingAssistant(Agent):
     def __init__(self):
         # Pass empty string; the property below provides fresh instructions on every access
@@ -120,26 +137,14 @@ class CalendarBookingAssistant(Agent):
 
         return (
             f'{prefix}'
-            'CRITICAL OUTPUT FORMAT: You are a VOICE-ONLY assistant. Your output is sent directly to a '
-            'text-to-speech engine. You MUST write plain spoken sentences. '
-            'FORBIDDEN: ** (bold), ## (headers), - (bullet points), | (tables), [] (links), emojis, '
-            'horizontal rules (---), or any Markdown syntax. Just speak naturally.\n\n'
-            'You are a highly efficient real-time voice calendar booking assistant.\n'
-            f'CRITICAL DATE INFO: The current date and time is {now.strftime("%A, %B %d %Y, %I:%M %p")} '
-            f'in timezone {GOOGLE_TIMEZONE}. \n'
-            f'The date for TODAY is exactly "{today_iso}". If the user says "today", you MUST use "{today_iso}" in your tool arguments.\n'
-            'Never use dates from the past (like 2024 or 2025) unless explicitly requested. \n\n'
-            'RULES FOR INTERACTION:\n'
-            '1. Keep replies concise and conversational, like a human assistant on a phone call.\n'
-            '2. You have access to TOOLS. You MUST use them to perform actions.\n'
-            '3. When the user asks to schedule a meeting, you must gather the title, start date/time, and duration.\n'
-            '4. Once you have the details, you MUST call the "check_availability" tool to confirm the time slot is free.\n'
-            '5. IMPORTANT: After checking availability, you MUST read back the full meeting details and ask the user '
-            'for explicit confirmation BEFORE calling "book_meeting". Never book without the user saying yes.\n'
-            '6. If it is busy, call "suggest_time_slots" and ask the user for a new time.\n'
-            '7. If the user wants to move or reschedule an existing meeting, use "reschedule_meeting" to find and update it.\n'
-            '8. Always explicitly state the outcome of your tool calls to the user.\n\n'
-            'REMINDER: Absolutely no Markdown formatting. No ** or ## or tables or emojis. Plain spoken text only.'
+            f'You are a voice calendar assistant. Today is {now.strftime("%A %B %d %Y")}, '
+            f'time is {now.strftime("%I:%M %p")}, timezone {GOOGLE_TIMEZONE}. '
+            f'Use "{today_iso}" for today in tool arguments.\n'
+            'OUTPUT RULES: Plain spoken text only. No markdown, no bold, no headers, no tables, '
+            'no bullets, no emojis, no links. Speak naturally in short sentences.\n'
+            'WORKFLOW: Use tools to check availability then book. Default duration is 30 minutes. '
+            'Attendee email is optional. Ask one question at a time. '
+            'Confirm details before booking. State outcomes clearly.'
         )
 
     @instructions.setter
@@ -559,6 +564,12 @@ async def entrypoint(ctx: agents.JobContext):
         tts=build_tts(),
         vad=vad,
         aec_warmup_duration=0.8,
+        # Strip markdown/emoji from LLM output before TTS speaks it
+        tts_text_transforms=[
+            'filter_markdown',
+            'filter_emoji',
+            strip_markdown,
+        ],
         conn_options=SessionConnectOptions(
             stt_conn_options=APIConnectOptions(timeout=60.0, max_retry=2),
             llm_conn_options=APIConnectOptions(timeout=EFFECTIVE_LLM_REQUEST_TIMEOUT_SECONDS, max_retry=1),
