@@ -334,15 +334,36 @@ def run_stt_adapter():
 
 
 def run_tts_adapter():
-    # OpenAI-compatible TTS adapter -> Piper CLI
+    # OpenAI-compatible TTS adapter -> Piper CLI with dual voice support
     from aiohttp import web
 
     piper_bin = ensure_piper_binary()
-    model_path = os.getenv('PIPER_MODEL_PATH', DEFAULTS['PIPER_MODEL_PATH'])
-    ensure_piper_model_files(model_path)
+
+    # Primary voice: lessac-high (warm, professional)
+    primary_model = os.getenv('PIPER_MODEL_PATH', DEFAULTS['PIPER_MODEL_PATH'])
+    ensure_piper_model_files(primary_model)
+
+    # Secondary voice: amy-medium (clear, friendly)
+    secondary_model = str(ROOT / 'models' / 'en_US-amy-medium.onnx')
+    if Path(secondary_model).exists() and Path(secondary_model + '.json').exists():
+        print(f'[tts] dual voice enabled: lessac-high (primary) + amy-medium (secondary)')
+    else:
+        secondary_model = None
+        print(f'[tts] single voice mode: {Path(primary_model).stem}')
+
+    # Map voice names to model paths
+    voice_map = {
+        'en_US-lessac-high': primary_model,
+        'lessac': primary_model,
+        'default': primary_model,
+    }
+    if secondary_model:
+        voice_map['en_US-amy-medium'] = secondary_model
+        voice_map['amy'] = secondary_model
 
     async def health(_request: web.Request):
-        return web.json_response({'ok': True, 'backend': 'piper'})
+        voices = list(voice_map.keys())
+        return web.json_response({'ok': True, 'backend': 'piper', 'voices': voices})
 
     async def speech(request: web.Request):
         try:
@@ -354,12 +375,16 @@ def run_tts_adapter():
         if not text:
             return web.json_response({'error': 'missing input'}, status=400)
 
+        # Select voice model based on request (OpenAI API sends 'voice' field)
+        requested_voice = (body.get('voice') or 'default').strip()
+        model = voice_map.get(requested_voice, primary_model)
+
         with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp:
             out_path = tmp.name
 
         try:
             proc = subprocess.run(
-                [piper_bin, '--model', model_path, '--output_file', out_path],
+                [piper_bin, '--model', model, '--output_file', out_path],
                 input=text.encode('utf-8'),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
