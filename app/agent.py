@@ -542,15 +542,18 @@ class CalendarBookingAssistant(Agent):
 
 
 server = agents.AgentServer()
+server.prewarm = prewarm
 
 
 @server.rtc_session(agent_name='calendar-agent')
 async def entrypoint(ctx: agents.JobContext):
+    # Use prewarmed VAD if available, otherwise load fresh
+    vad = ctx.proc.userdata.get('vad') or silero.VAD.load()
     session = AgentSession(
         stt=build_stt(),
         llm=build_llm(),
         tts=build_tts(),
-        vad=ctx.proc.userdata['vad'],
+        vad=vad,
         aec_warmup_duration=0.8,
         conn_options=SessionConnectOptions(
             stt_conn_options=APIConnectOptions(timeout=60.0, max_retry=2),

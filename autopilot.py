@@ -434,6 +434,8 @@ def run_main():
 
     # Determine launch mode: if LiveKit credentials exist, use 'dev' mode (connects to
     # LiveKit server for Web UI support). Otherwise fall back to 'console' mode.
+    from dotenv import load_dotenv
+    load_dotenv(ROOT / '.env', override=False)
     livekit_url = os.getenv('LIVEKIT_URL', '').strip()
     if livekit_url and livekit_url != 'ws://localhost:7880':
         print(f'[start] launching agent in dev mode (connected to {livekit_url})...')
