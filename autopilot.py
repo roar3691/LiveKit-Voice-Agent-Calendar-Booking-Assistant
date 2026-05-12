@@ -46,6 +46,9 @@ DEFAULTS: Dict[str, str] = {
     'WHISPERCPP_MODEL_PATH': str(ROOT / 'models' / 'ggml-base.en.bin'),
     # piper
     'PIPER_MODEL_PATH': str(ROOT / 'models' / 'en_US-lessac-high.onnx'),
+    # tts backend: 'qwen3' (neural, high quality) or 'piper' (lightweight)
+    'TTS_BACKEND': 'qwen3',
+    'QWEN3_TTS_MODEL': 'mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit',
 }
 
 PIP_BOOTSTRAP = ['--upgrade', 'pip', 'setuptools', 'wheel']
@@ -334,7 +337,98 @@ def run_stt_adapter():
 
 
 def run_tts_adapter():
-    # OpenAI-compatible TTS adapter -> Piper CLI with dual voice support
+    """OpenAI-compatible TTS adapter with Qwen3-TTS (MLX) or Piper backend."""
+    from aiohttp import web
+
+    tts_backend = os.getenv('TTS_BACKEND', 'qwen3').lower()
+
+    if tts_backend == 'qwen3':
+        return _run_qwen3_tts_adapter()
+    else:
+        return _run_piper_tts_adapter()
+
+
+def _run_qwen3_tts_adapter():
+    """Qwen3-TTS via mlx-audio — high quality neural TTS on Apple Silicon."""
+    from aiohttp import web
+    import io
+
+    qwen3_model_id = os.getenv(
+        'QWEN3_TTS_MODEL', 'mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit'
+    )
+
+    print(f'[tts] loading Qwen3-TTS model: {qwen3_model_id} ...')
+    from mlx_audio.tts.utils import load_model
+    model = load_model(qwen3_model_id)
+    print(f'[tts] Qwen3-TTS model loaded successfully')
+
+    async def health(_request: web.Request):
+        return web.json_response({
+            'ok': True, 'backend': 'qwen3-tts', 'model': qwen3_model_id
+        })
+
+    async def speech(request: web.Request):
+        try:
+            body = await request.json()
+        except Exception:
+            return web.json_response({'error': 'invalid json'}, status=400)
+
+        text = (body.get('input') or '').strip()
+        if not text:
+            return web.json_response({'error': 'missing input'}, status=400)
+
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.wav', prefix='qwen3tts_') as tmp:
+            out_prefix = tmp.name.replace('.wav', '')
+
+        try:
+            from mlx_audio.tts.generate import generate_audio
+            import numpy as np
+
+            # Generate audio (saves to file)
+            audio_result = generate_audio(
+                model=model,
+                text=text,
+                file_prefix=out_prefix,
+                verbose=False,
+            )
+
+            # Find the generated wav file
+            out_path = out_prefix + '.wav'
+            if not Path(out_path).exists():
+                # Try finding any generated file
+                import glob
+                candidates = glob.glob(out_prefix + '*')
+                if candidates:
+                    out_path = candidates[0]
+                else:
+                    return web.json_response(
+                        {'error': 'Qwen3-TTS did not produce audio output'}, status=500
+                    )
+
+            audio_bytes = Path(out_path).read_bytes()
+            return web.Response(body=audio_bytes, content_type='audio/wav')
+        except Exception as exc:
+            print(f'[tts] Qwen3-TTS error: {exc}')
+            return web.json_response({'error': str(exc)}, status=500)
+        finally:
+            # Clean up temp files
+            import glob
+            for f in glob.glob(out_prefix + '*'):
+                try:
+                    os.remove(f)
+                except OSError:
+                    pass
+
+    app = web.Application()
+    app.add_routes([
+        web.get('/health', health),
+        web.post('/v1/audio/speech', speech),
+    ])
+    web.run_app(app, host='127.0.0.1', port=8002)
+
+
+def _run_piper_tts_adapter():
+    """Piper TTS — lightweight local TTS with dual voice support."""
     from aiohttp import web
 
     piper_bin = ensure_piper_binary()
