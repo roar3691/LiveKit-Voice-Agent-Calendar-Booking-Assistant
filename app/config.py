@@ -12,7 +12,7 @@ DEEPGRAM_API_KEY = os.getenv('DEEPGRAM_API_KEY', '')
 GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
 
 LLM_PROVIDER = os.getenv('LLM_PROVIDER', 'openai').lower()
-LLM_MODEL = os.getenv('LLM_MODEL', 'gpt-4.1-mini')
+LLM_MODEL = os.getenv('LLM_MODEL', 'mlx-qwen3.5-4b-claude-4.6-opus-reasoning-distilled')
 LLM_REQUEST_TIMEOUT_SECONDS = float(os.getenv('LLM_REQUEST_TIMEOUT_SECONDS', '180'))
 LLM_MAX_COMPLETION_TOKENS = int(os.getenv('LLM_MAX_COMPLETION_TOKENS', '1024'))
 STT_PROVIDER = os.getenv('STT_PROVIDER', 'deepgram').lower()

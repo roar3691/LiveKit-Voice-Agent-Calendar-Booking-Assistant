@@ -48,7 +48,9 @@ service_account.json
 models/
 
 # Logs and Audio Tests
-*.txt
 *.wav
-models/*.onnx
-models/*.bin
+stderr*.txt
+stdout*.txt
+
+# Observability exports
+observability-*/

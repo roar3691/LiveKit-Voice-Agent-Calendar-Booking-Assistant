@@ -456,7 +456,7 @@
                 room.on(RoomEvent.TranscriptionReceived, (segments, participant) => {
                     for (const seg of segments) {
                         if (!seg.final) continue;
-                        const role = participant?.identity?.startsWith('agent') ? 'agent' : 'user';
+                        const role = participant?.isAgent ? 'agent' : 'user';
                         addMessage(role, seg.text);
                     }
                 });
@@ -469,16 +469,32 @@
                     if (track.kind === Track.Kind.Audio) {
                         const el = track.attach();
                         document.body.appendChild(el);
+                        // Some deployments do not set participant.isAgent reliably.
+                        // If a remote audio track is subscribed, we are effectively connected.
+                        setStatus('Agent audio connected — listening', 'connected');
                     }
                 });
+
+                const markAgentPresent = (participant) => {
+                    // Agent workers often use identities without the substring "agent"; use SDK flag.
+                    if (participant.isAgent) {
+                        setStatus('Agent joined — listening', 'connected');
+                    } else if (participant) {
+                        // Fallback: show remote participant presence even if isAgent flag is unavailable.
+                        setStatus('Remote participant joined — listening', 'connected');
+                    }
+                };
 
                 room.on(RoomEvent.ParticipantConnected, (participant) => {
-                    if (participant.identity.includes('agent')) {
-                        setStatus('Agent joined — listening', 'connected');
-                    }
+                    markAgentPresent(participant);
                 });
 
+                setStatus('Connected — waiting for agent...', 'connected');
                 await room.connect(config.livekit_url, token);
+
+                // Agent may already be in the room (dispatch completed before this handler ran).
+                room.remoteParticipants.forEach((p) => markAgentPresent(p));
+
                 await room.localParticipant.setMicrophoneEnabled(true);
 
                 // Start mic visualizer
@@ -489,7 +505,9 @@
 
                 connected = true;
                 muted = false;
-                setStatus('Connected — listening', 'connected');
+                if (![...room.remoteParticipants.values()].some((p) => p.isAgent)) {
+                    setStatus('Connected — waiting for agent...', 'connected');
+                }
                 connectBtn.innerHTML = '<span class="icon">⏹️</span> Disconnect';
                 connectBtn.disabled = false;
                 connectBtn.classList.remove('primary');

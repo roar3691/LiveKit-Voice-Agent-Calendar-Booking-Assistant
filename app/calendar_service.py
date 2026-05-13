@@ -131,3 +131,31 @@ class GoogleCalendarService:
             body=body,
             sendUpdates='none',
         ).execute()
+
+    def create_all_day_event(
+        self,
+        summary: str,
+        description: str,
+        start_date: str,
+        exclusive_end_date: str,
+    ):
+        """Create an all-day / multi-day calendar event.
+
+        Args:
+            summary: Event title.
+            description: Optional event notes.
+            start_date: First day in ``YYYY-MM-DD`` format (inclusive).
+            exclusive_end_date: Day *after* the last day in ``YYYY-MM-DD``
+                format (Google Calendar uses exclusive end for all-day events).
+        """
+        body = {
+            'summary': summary,
+            'description': description or '',
+            'start': {'date': start_date},
+            'end': {'date': exclusive_end_date},
+        }
+        return self.client.events().insert(
+            calendarId=self.calendar_id,
+            body=body,
+            sendUpdates='none',
+        ).execute()

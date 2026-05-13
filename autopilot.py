@@ -13,6 +13,7 @@ import wave
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional
+from urllib.error import HTTPError, URLError
 from urllib.request import Request as URLRequest, urlopen
 
 ROOT = Path(__file__).resolve().parent
@@ -167,6 +168,33 @@ def wait_health(check: HealthCheck):
             return
         time.sleep(1)
     raise RuntimeError(f'{check.name} did not become ready: {check.url}')
+
+
+def wait_tts_adapter_ready(timeout_sec: int):
+    """Wait until TTS /health returns 200 (Piper: immediate; Qwen3: after model load). Treat 503 as still loading."""
+    url = 'http://127.0.0.1:8002/health'
+    print(f'[wait] waiting for local TTS adapter at {url}...')
+    start = time.time()
+    while time.time() - start < timeout_sec:
+        req = URLRequest(url, method='GET')
+        try:
+            with urlopen(req, timeout=2) as resp:
+                if resp.status == 200:
+                    print('[ok] local TTS adapter is ready')
+                    return
+        except HTTPError as e:
+            if e.code == 503:
+                time.sleep(1)
+                continue
+            body = e.read().decode('utf-8', errors='replace')
+            raise RuntimeError(f'local TTS adapter health error ({e.code}): {body}')
+        except (URLError, OSError):
+            time.sleep(1)
+            continue
+        except Exception:
+            time.sleep(1)
+            continue
+    raise RuntimeError(f'local TTS adapter did not become ready: {url}')
 
 
 def start_child(cmd: List[str], env: Optional[Dict[str, str]] = None):
@@ -340,7 +368,7 @@ def run_tts_adapter():
     """OpenAI-compatible TTS adapter with Qwen3-TTS (MLX) or Piper backend."""
     from aiohttp import web
 
-    tts_backend = os.getenv('TTS_BACKEND', 'qwen3').lower()
+    tts_backend = os.getenv('TTS_BACKEND', DEFAULTS['TTS_BACKEND']).lower()
 
     if tts_backend == 'qwen3':
         return _run_qwen3_tts_adapter()
@@ -351,23 +379,39 @@ def run_tts_adapter():
 def _run_qwen3_tts_adapter():
     """Qwen3-TTS via mlx-audio — high quality neural TTS on Apple Silicon."""
     from aiohttp import web
-    import io
+    import asyncio
 
     qwen3_model_id = os.getenv(
         'QWEN3_TTS_MODEL', 'mlx-community/Qwen3-TTS-12Hz-1.7B-CustomVoice-8bit'
     )
 
-    print(f'[tts] loading Qwen3-TTS model: {qwen3_model_id} ...')
-    from mlx_audio.tts.utils import load_model
-    model = load_model(qwen3_model_id)
-    print(f'[tts] Qwen3-TTS model loaded successfully')
+    def _load_qwen3_model_blocking():
+        print(f'[tts] loading Qwen3-TTS model: {qwen3_model_id} ...')
+        from mlx_audio.tts.utils import load_model
 
-    async def health(_request: web.Request):
-        return web.json_response({
-            'ok': True, 'backend': 'qwen3-tts', 'model': qwen3_model_id
-        })
+        return load_model(qwen3_model_id)
+
+    async def health(request: web.Request):
+        err = request.app.get('tts_load_error')
+        if err:
+            return web.json_response(
+                {'ok': False, 'backend': 'qwen3-tts', 'error': err},
+                status=500,
+            )
+        if request.app.get('tts_model') is not None:
+            return web.json_response(
+                {'ok': True, 'backend': 'qwen3-tts', 'model': qwen3_model_id}
+            )
+        return web.json_response(
+            {'ok': False, 'backend': 'qwen3-tts', 'status': 'loading', 'model': qwen3_model_id},
+            status=503,
+        )
 
     async def speech(request: web.Request):
+        model = request.app.get('tts_model')
+        if model is None:
+            return web.json_response({'error': 'TTS model is still loading'}, status=503)
+
         try:
             body = await request.json()
         except Exception:
@@ -382,21 +426,18 @@ def _run_qwen3_tts_adapter():
 
         try:
             from mlx_audio.tts.generate import generate_audio
-            import numpy as np
 
-            # Generate audio (saves to file)
-            audio_result = generate_audio(
+            generate_audio(
                 model=model,
                 text=text,
                 file_prefix=out_prefix,
                 verbose=False,
             )
 
-            # Find the generated wav file
             out_path = out_prefix + '.wav'
             if not Path(out_path).exists():
-                # Try finding any generated file
                 import glob
+
                 candidates = glob.glob(out_prefix + '*')
                 if candidates:
                     out_path = candidates[0]
@@ -411,15 +452,30 @@ def _run_qwen3_tts_adapter():
             print(f'[tts] Qwen3-TTS error: {exc}')
             return web.json_response({'error': str(exc)}, status=500)
         finally:
-            # Clean up temp files
             import glob
+
             for f in glob.glob(out_prefix + '*'):
                 try:
                     os.remove(f)
                 except OSError:
                     pass
 
+    async def _load_model_task(app: web.Application):
+        try:
+            model = await asyncio.to_thread(_load_qwen3_model_blocking)
+            app['tts_model'] = model
+            print('[tts] Qwen3-TTS model loaded successfully')
+        except Exception as exc:
+            app['tts_load_error'] = str(exc)
+            print(f'[tts] Qwen3-TTS failed to load: {exc}')
+
+    async def on_startup(app: web.Application):
+        app['tts_model'] = None
+        app['tts_load_error'] = None
+        asyncio.create_task(_load_model_task(app))
+
     app = web.Application()
+    app.on_startup.append(on_startup)
     app.add_routes([
         web.get('/health', health),
         web.post('/v1/audio/speech', speech),
@@ -508,6 +564,15 @@ def run_main():
     pip_install()
     ensure_env_file()
 
+    # Load .env into this process before spawning adapters so children inherit
+    # the same TTS_BACKEND / paths as `app.agent` (which loads .env itself).
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv(ROOT / '.env', override=False)
+    except ImportError:
+        pass
+
     env = os.environ.copy()
     env['PYTHONUNBUFFERED'] = '1'
 
@@ -538,7 +603,17 @@ def run_main():
         start_child([str(PYTHON_BIN), str(ROOT / 'autopilot.py'), '--serve-tts-adapter'], env=env)
 
     wait_health(HealthCheck('local STT adapter', 'http://127.0.0.1:8001/health', 120))
-    wait_health(HealthCheck('local TTS adapter', 'http://127.0.0.1:8002/health', 120))
+    # Piper starts quickly; Qwen3-TTS may download multi-GB before first /health 200.
+    tts_backend = os.getenv('TTS_BACKEND', DEFAULTS['TTS_BACKEND']).lower()
+    default_tts_wait = 7200 if tts_backend == 'qwen3' else 120
+    tts_wait = int(os.getenv('AUTOPILOT_TTS_HEALTH_TIMEOUT_SEC', str(default_tts_wait)))
+    if tts_backend == 'qwen3':
+        print(
+            '[info] TTS_BACKEND=qwen3: first run can download several GB; '
+            f'waiting up to {tts_wait}s for TTS. Set TTS_BACKEND=piper for instant local TTS, '
+            'or AUTOPILOT_TTS_HEALTH_TIMEOUT_SEC to adjust.'
+        )
+    wait_tts_adapter_ready(tts_wait)
 
     check_lmstudio()
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
+import time
 from pathlib import Path
 
 from aiohttp import web
@@ -16,7 +17,7 @@ LIVEKIT_URL = os.getenv('LIVEKIT_URL', 'ws://localhost:7880')
 LIVEKIT_API_KEY = os.getenv('LIVEKIT_API_KEY', 'devkey')
 LIVEKIT_API_SECRET = os.getenv('LIVEKIT_API_SECRET', 'secret')
 WEB_DIR = Path(__file__).resolve().parent
-ROOM_NAME = 'calendar-agent'
+ROOM_PREFIX = 'calendar-agent'
 
 
 async def index(_request: web.Request):
@@ -33,6 +34,8 @@ async def get_token(request: web.Request):
     from livekit import api
 
     identity = request.query.get('identity', 'web-user')
+    requested_room = request.query.get('room', '').strip()
+    room_name = requested_room or f'{ROOM_PREFIX}-{int(time.time())}'
 
     token = (
         api.AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET)
@@ -41,7 +44,10 @@ async def get_token(request: web.Request):
         .with_grants(
             api.VideoGrants(
                 room_join=True,
-                room=ROOM_NAME,
+                room=room_name,
+                can_publish=True,
+                can_subscribe=True,
+                can_publish_data=True,
             )
         )
         .with_room_config(
@@ -51,7 +57,7 @@ async def get_token(request: web.Request):
         )
         .to_jwt()
     )
-    return web.json_response({'token': token, 'room': ROOM_NAME})
+    return web.json_response({'token': token, 'room': room_name})
 
 
 async def health(_request: web.Request):

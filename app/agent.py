@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
 from livekit import agents
@@ -38,8 +39,19 @@ from app.config import (
     LOCAL_TTS_VOICE,
 )
 from app.calendar_service import GoogleCalendarService
+from app.date_utils import (
+    events_to_summary,
+    missing_fields,
+    parse_calendar_date,
+    parse_dt,
+    parse_dt_or_error,
+    preset_from_natural_query,
+    validate_future_window,
+    window_for_preset,
+)
 
 load_dotenv('.env')
+logger = logging.getLogger(__name__)
 
 EFFECTIVE_LLM_REQUEST_TIMEOUT_SECONDS = LLM_REQUEST_TIMEOUT_SECONDS
 CALENDAR_TIMEOUT_SECONDS = 12.0
@@ -47,6 +59,7 @@ CALENDAR_TIMEOUT_SECONDS = 12.0
 
 def prewarm(proc: JobProcess):
     proc.userdata['vad'] = silero.VAD.load()
+
 
 def build_llm():
     import openai as openai_client
@@ -98,19 +111,19 @@ def build_tts():
     return openai.TTS(voice=OPENAI_TTS_VOICE, api_key=OPENAI_API_KEY or None, base_url=OPENAI_BASE_URL or None)
 
 
-def strip_markdown(text: str) -> str:
-    """Remove Markdown formatting so TTS speaks clean text."""
-    text = re.sub(r'#{1,6}\s*', '', text)           # ## headers
-    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)     # **bold**
-    text = re.sub(r'\*(.*?)\*', r'\1', text)          # *italic*
-    text = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text)   # [link](url)
-    text = re.sub(r'^[\-\*]\s+', '', text, flags=re.MULTILINE)  # bullet points
-    text = re.sub(r'^\d+\.\s+', '', text, flags=re.MULTILINE)   # numbered lists
-    text = re.sub(r'\|', ', ', text)                  # table separators
-    text = re.sub(r'^[\-=]{3,}$', '', text, flags=re.MULTILINE)  # horizontal rules
-    text = re.sub(r'`{1,3}(.*?)`{1,3}', r'\1', text)  # `code`
-    text = re.sub(r'[✅📅🎉🗓️📝❌⚠️🔗📌💡🎯🔔🍽️]', '', text)  # emojis
-    text = re.sub(r'\n{3,}', '\n\n', text)            # collapse newlines
+def _strip_markdown(text: str) -> str:
+    """Remove markdown formatting and emojis so TTS reads clean text."""
+    text = re.sub(r'#{1,6}\s*', '', text)
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
+    text = re.sub(r'\*(.*?)\*', r'\1', text)
+    text = re.sub(r'_{1,2}(.*?)_{1,2}', r'\1', text)
+    text = re.sub(r'~~(.*?)~~', r'\1', text)
+    text = re.sub(r'\[(.*?)\]\(.*?\)', r'\1', text)
+    text = re.sub(r'^[\-\*]\s+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'^\d+\.\s+', '', text, flags=re.MULTILINE)
+    text = re.sub(r'`{1,3}(.*?)`{1,3}', r'\1', text)
+    text = re.sub(r'[✅📅🎉🗓️📝❌⚠️🔗📌💡🎯🔔]', '', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
     return text.strip()
 
 
@@ -139,12 +152,33 @@ class CalendarBookingAssistant(Agent):
             f'{prefix}'
             f'You are a voice calendar assistant. Today is {now.strftime("%A %B %d %Y")}, '
             f'time is {now.strftime("%I:%M %p")}, timezone {GOOGLE_TIMEZONE}. '
+            f'Calendar year for user dates without a year is {now.year}. '
             f'Use "{today_iso}" for today in tool arguments.\n'
             'OUTPUT RULES: Plain spoken text only. No markdown, no bold, no headers, no tables, '
             'no bullets, no emojis, no links. Speak naturally in short sentences.\n'
-            'WORKFLOW: Use tools to check availability then book. Default duration is 30 minutes. '
-            'Attendee email is optional. Ask one question at a time. '
-            'Confirm details before booking. State outcomes clearly.'
+            'TOOL RULES (critical):\n'
+            '- When the user asks if they are free, busy, what is on the calendar, or mentions '
+            '"this weekend", "Saturday", "Sunday", "today", "tomorrow", "this week", '
+            '"this month", "next month", or rolling windows like "next 10 days", call '
+            'smart_calendar_lookup with their phrase directly. Do not ask them for ISO dates.\n'
+            '- When they give concrete calendar days (e.g. May 15 through May 17), call '
+            'calendar_date_range_lookup with start_date and end_date as YYYY-MM-DD using the '
+            'year above if they did not say the year.\n'
+            '- For a specific time slot, use check_availability with full ISO datetimes.\n'
+            '- Do not ask for an email address unless you are about to book a meeting with an invitee.\n'
+            '- After a tool returns, summarize the result in one or two short sentences.\n'
+            '- IMPORTANT: When tool results include date ranges (e.g. "Queried: Saturday May 16 '
+            'through Sunday May 17"), use THOSE EXACT DATES for any follow-up booking. '
+            'Never guess or compute dates yourself.\n'
+            'BOOKING RULES:\n'
+            '- Default duration 30 minutes. Confirm title and time before booking.\n'
+            '- For all-day or multi-day events (like "block my weekend" or "mark as busy"), '
+            'use book_all_day_event with YYYY-MM-DD dates. Do NOT use book_meeting for these.\n'
+            '- For timed meetings at specific hours, use book_meeting with ISO datetimes.\n'
+            '- Attendee email is optional for booking.\n'
+            '- Never say "I will check" unless you are calling the calendar tool in this same turn. '
+            'For weekend/today/tomorrow/this week availability, call smart_calendar_lookup first, '
+            'then answer with the actual result.'
         )
 
     @instructions.setter
@@ -152,14 +186,8 @@ class CalendarBookingAssistant(Agent):
         # Ignore writes from the parent __init__; the getter always returns fresh instructions.
         pass
 
-    def _parse_dt(self, iso_text: str) -> datetime:
-        dt = datetime.fromisoformat(iso_text)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=ZoneInfo(GOOGLE_TIMEZONE))
-        return dt
-
-    def _missing_fields(self, **fields: str) -> list[str]:
-        return [name for name, value in fields.items() if not str(value or '').strip()]
+    def _tz(self) -> ZoneInfo:
+        return ZoneInfo(GOOGLE_TIMEZONE)
 
     async def _calendar_call(self, label: str, func, *args):
         try:
@@ -170,87 +198,99 @@ class CalendarBookingAssistant(Agent):
         except asyncio.TimeoutError as exc:
             raise RuntimeError(f'{label} timed out after {CALENDAR_TIMEOUT_SECONDS:.0f}s') from exc
 
-    def _parse_dt_or_error(self, iso_text: str, field_name: str) -> tuple[datetime | None, str | None]:
-        try:
-            return self._parse_dt(iso_text), None
-        except ValueError:
-            return None, f"Missing or invalid {field_name}. Ask the user for a specific date and time."
-
-    def _validate_future_window(self, start: datetime, end: datetime) -> str | None:
-        if end <= start:
-            return 'End time must be after start time. Ask the user to clarify the duration or end time.'
-
-        now = datetime.now(ZoneInfo(GOOGLE_TIMEZONE))
-        if start < now - timedelta(minutes=5):
-            return (
-                f"Requested time is in the past. Current date/time is "
-                f"{now.strftime('%A, %B %d %Y, %I:%M %p')} {GOOGLE_TIMEZONE}. "
-                "Ask the user to confirm a future date and time."
-            )
-        return None
-
-    def _event_time(self, event: dict, key: str) -> datetime | None:
-        raw = event.get(key, {}).get('dateTime') or event.get(key, {}).get('date')
-        if not raw:
-            return None
-        dt = datetime.fromisoformat(raw.replace('Z', '+00:00'))
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=ZoneInfo(GOOGLE_TIMEZONE))
-        return dt.astimezone(ZoneInfo(GOOGLE_TIMEZONE))
+    # ------------------------------------------------------------------
+    # Lookup tools
+    # ------------------------------------------------------------------
 
     @function_tool
-    async def list_calendar_events(
-        self,
-        context: RunContext,
-        window_start_iso: str,
-        window_end_iso: str,
-        query: str = "",
-    ) -> str:
-        """List calendar events in a time window.
+    async def smart_calendar_lookup(self, context: RunContext, query: str) -> str:
+        """Look up calendar events using natural language time references.
+
+        Use this for any availability or schedule query. Accepts natural phrases like:
+        - "today", "tomorrow", "this weekend", "next weekend"
+        - "this week", "this month", "next month", "last month"
+        - "next 10 days", "past 14 days", "last 7 days"
+        - "am I free this weekend?", "what does next week look like?"
 
         Args:
-            window_start_iso: ISO datetime start for lookup window
-            window_end_iso: ISO datetime end for lookup window
-            query: Optional text to search for in event title/details
+            query: The user's time-related phrase (pass their words directly).
         """
-        missing = self._missing_fields(
-            window_start_iso=window_start_iso,
-            window_end_iso=window_end_iso,
-        )
-        if missing:
-            return f"Missing required details: {', '.join(missing)}."
+        preset = preset_from_natural_query(query)
+        if not preset:
+            # Try treating the query itself as a preset token
+            maybe = (query or '').strip().lower().replace(' ', '_').replace('-', '_')
+            if maybe and window_for_preset(maybe, GOOGLE_TIMEZONE):
+                preset = maybe
 
-        window_start, start_error = self._parse_dt_or_error(window_start_iso, 'window_start_iso')
-        window_end, end_error = self._parse_dt_or_error(window_end_iso, 'window_end_iso')
-        if start_error or end_error:
-            return start_error or end_error or 'Invalid lookup window.'
+        if not preset:
+            return (
+                f'I could not map "{query}" to a calendar range yet. '
+                'Try phrasing like: today, this weekend, this month, next month, '
+                'next 10 days, or past 14 days.'
+            )
+
+        window = window_for_preset(preset, GOOGLE_TIMEZONE)
+        if window is None:
+            return f'Unsupported timeframe "{preset}".'
+
+        start, end = window
+        label = preset.replace('_', ' ')
+        try:
+            events = await self._calendar_call(
+                'calendar lookup',
+                self.calendar.find_events,
+                start, end, None,
+            )
+        except Exception as exc:
+            logger.error('calendar lookup failed: %s', exc)
+            return 'Calendar lookup failed. Please try again.'
+
+        return events_to_summary(events, f'for {label}', GOOGLE_TIMEZONE, start_dt=start, end_dt=end)
+
+    @function_tool
+    async def calendar_date_range_lookup(
+        self,
+        context: RunContext,
+        start_date: str,
+        end_date: str,
+    ) -> str:
+        """List calendar events across calendar days (inclusive). Use YYYY-MM-DD only.
+
+        When the user says a range like May 15 to May 17, convert to dates using the
+        current calendar year from the system message if they did not specify a year.
+
+        Args:
+            start_date: Start date YYYY-MM-DD
+            end_date: End date YYYY-MM-DD (inclusive)
+        """
+        sd = parse_calendar_date(start_date)
+        ed = parse_calendar_date(end_date)
+        if not sd or not ed:
+            return 'Dates must be YYYY-MM-DD, for example 2026-05-15.'
+
+        if ed < sd:
+            sd, ed = ed, sd
+
+        tz = self._tz()
+        window_start = datetime.combine(sd, time.min, tzinfo=tz)
+        window_end = datetime.combine(ed, time(23, 59, 59), tzinfo=tz)
 
         try:
             events = await self._calendar_call(
-                'list calendar events',
+                'date range lookup',
                 self.calendar.find_events,
-                window_start,
-                window_end,
-                query or None,
+                window_start, window_end, None,
             )
         except Exception as exc:
-            print(f'[calendar] unable to list events: {exc}')
+            logger.error('date range lookup failed: %s', exc)
             return 'Calendar lookup failed. Please try again.'
-        if not events:
-            return 'No matching events found.'
 
-        lines = []
-        for event in events[:5]:
-            title = event.get('summary') or 'Untitled event'
-            start = self._event_time(event, 'start')
-            end = self._event_time(event, 'end')
-            if start and end:
-                lines.append(f"{title}: {start.strftime('%I:%M %p')} to {end.strftime('%I:%M %p')}")
-            else:
-                lines.append(title)
-        if len(events) > len(lines):
-            lines.append(f"...and {len(events) - len(lines)} more.")
-        return '\n'.join(lines)
+        label = f'from {sd.isoformat()} through {ed.isoformat()}'
+        return events_to_summary(events, label, GOOGLE_TIMEZONE, start_dt=window_start, end_dt=window_end)
+
+    # ------------------------------------------------------------------
+    # Availability tools
+    # ------------------------------------------------------------------
 
     @function_tool
     async def check_availability(
@@ -265,26 +305,23 @@ class CalendarBookingAssistant(Agent):
             requested_start_iso: ISO datetime like 2026-05-13T15:00:00+05:30
             requested_end_iso: ISO datetime like 2026-05-13T15:30:00+05:30
         """
-        missing = self._missing_fields(
-            requested_start_iso=requested_start_iso,
-            requested_end_iso=requested_end_iso,
-        )
-        if missing:
-            return f"Missing required details: {', '.join(missing)}."
+        miss = missing_fields(requested_start_iso=requested_start_iso, requested_end_iso=requested_end_iso)
+        if miss:
+            return f"Missing required details: {', '.join(miss)}."
 
-        start, start_error = self._parse_dt_or_error(requested_start_iso, 'requested_start_iso')
-        end, end_error = self._parse_dt_or_error(requested_end_iso, 'requested_end_iso')
-        if start_error or end_error:
-            return start_error or end_error or 'Invalid requested time.'
+        start, start_err = parse_dt_or_error(requested_start_iso, 'requested_start_iso', GOOGLE_TIMEZONE)
+        end, end_err = parse_dt_or_error(requested_end_iso, 'requested_end_iso', GOOGLE_TIMEZONE)
+        if start_err or end_err:
+            return start_err or end_err or 'Invalid requested time.'
 
-        validation_error = self._validate_future_window(start, end)
-        if validation_error:
-            return validation_error
+        val_err = validate_future_window(start, end, GOOGLE_TIMEZONE)
+        if val_err:
+            return val_err
 
         try:
             free = await self._calendar_call('check availability', self.calendar.is_free, start, end)
         except Exception as exc:
-            print(f'[calendar] unable to check availability: {exc}')
+            logger.error('availability check failed: %s', exc)
             return 'Calendar availability check failed. Please try again.'
         return 'AVAILABLE' if free else 'BUSY'
 
@@ -303,33 +340,26 @@ class CalendarBookingAssistant(Agent):
             window_end_iso: ISO datetime end for search window
             meeting_minutes: meeting duration in minutes
         """
-        missing = self._missing_fields(
-            window_start_iso=window_start_iso,
-            window_end_iso=window_end_iso,
-        )
-        if missing:
-            return f"Missing required details: {', '.join(missing)}."
+        miss = missing_fields(window_start_iso=window_start_iso, window_end_iso=window_end_iso)
+        if miss:
+            return f"Missing required details: {', '.join(miss)}."
 
-        window_start, start_error = self._parse_dt_or_error(window_start_iso, 'window_start_iso')
-        window_end, end_error = self._parse_dt_or_error(window_end_iso, 'window_end_iso')
-        if start_error or end_error:
-            return start_error or end_error or 'Invalid search window.'
+        ws, ws_err = parse_dt_or_error(window_start_iso, 'window_start_iso', GOOGLE_TIMEZONE)
+        we, we_err = parse_dt_or_error(window_end_iso, 'window_end_iso', GOOGLE_TIMEZONE)
+        if ws_err or we_err:
+            return ws_err or we_err or 'Invalid search window.'
 
-        validation_error = self._validate_future_window(window_start, window_end)
-        if validation_error:
-            return validation_error
+        val_err = validate_future_window(ws, we, GOOGLE_TIMEZONE)
+        if val_err:
+            return val_err
 
         try:
             slots = await self._calendar_call(
                 'suggest time slots',
-                self.calendar.find_free_slots,
-                window_start,
-                window_end,
-                meeting_minutes,
-                5,
+                self.calendar.find_free_slots, ws, we, meeting_minutes, 5,
             )
         except Exception as exc:
-            print(f'[calendar] unable to suggest slots: {exc}')
+            logger.error('slot suggestion failed: %s', exc)
             return 'Calendar slot search failed. Please try again.'
         if not slots:
             return 'No free slots found in that window.'
@@ -342,6 +372,10 @@ class CalendarBookingAssistant(Agent):
                 f"{candidate_end.strftime('%I:%M %p')}"
             )
         return '\n'.join(lines)
+
+    # ------------------------------------------------------------------
+    # Booking tools
+    # ------------------------------------------------------------------
 
     @function_tool
     async def book_meeting(
@@ -362,30 +396,26 @@ class CalendarBookingAssistant(Agent):
             description: Optional meeting notes/agenda
             attendee_email: Optional invitee email
         """
-        missing = self._missing_fields(
-            title=title,
-            start_iso=start_iso,
-            end_iso=end_iso,
-        )
-        if missing:
+        miss = missing_fields(title=title, start_iso=start_iso, end_iso=end_iso)
+        if miss:
             return (
-                f"Cannot book yet. Missing required details: {', '.join(missing)}. "
+                f"Cannot book yet. Missing required details: {', '.join(miss)}. "
                 "Ask the user for the missing details before trying again."
             )
 
-        start, start_error = self._parse_dt_or_error(start_iso, 'start_iso')
-        end, end_error = self._parse_dt_or_error(end_iso, 'end_iso')
-        if start_error or end_error:
-            return start_error or end_error or 'Invalid meeting time.'
+        start, start_err = parse_dt_or_error(start_iso, 'start_iso', GOOGLE_TIMEZONE)
+        end, end_err = parse_dt_or_error(end_iso, 'end_iso', GOOGLE_TIMEZONE)
+        if start_err or end_err:
+            return start_err or end_err or 'Invalid meeting time.'
 
-        validation_error = self._validate_future_window(start, end)
-        if validation_error:
-            return validation_error
+        val_err = validate_future_window(start, end, GOOGLE_TIMEZONE)
+        if val_err:
+            return val_err
 
         try:
             is_free = await self._calendar_call('check availability', self.calendar.is_free, start, end)
         except Exception as exc:
-            print(f'[calendar] unable to check availability before booking: {exc}')
+            logger.error('pre-booking availability check failed: %s', exc)
             return 'Could not check the calendar right now. Please try again.'
 
         if not is_free:
@@ -394,25 +424,86 @@ class CalendarBookingAssistant(Agent):
         try:
             event = await self._calendar_call(
                 'create event',
-                self.calendar.create_event,
-                title,
-                description,
-                start,
-                end,
-                attendee_email,
+                self.calendar.create_event, title, description, start, end, attendee_email,
             )
         except Exception as exc:
-            print(f'[calendar] unable to create event: {exc}')
+            logger.error('event creation failed: %s', exc)
             return 'Could not create the calendar event. Please try again.'
 
         self.last_booked_event_id = event.get('id')
         self.last_booked_title = event.get('summary', title)
 
-        html_link = event.get('htmlLink', '')
         return (
             f'Meeting booked: {self.last_booked_title}, '
             f'{start.strftime("%A %B %d")} from {start.strftime("%I:%M %p")} to {end.strftime("%I:%M %p")}.'
         )
+
+    @function_tool
+    async def book_all_day_event(
+        self,
+        context: RunContext,
+        title: str,
+        start_date: str,
+        end_date: str,
+        description: str = '',
+    ) -> str:
+        """Create an all-day or multi-day calendar event. Use for blocking whole days.
+
+        Use this instead of book_meeting when the user wants to block entire days
+        (e.g. "mark my weekend as busy", "block Friday through Sunday").
+
+        Args:
+            title: Event title (e.g. "Busy", "Out of Office")
+            start_date: First day YYYY-MM-DD (inclusive)
+            end_date: Last day YYYY-MM-DD (inclusive)
+            description: Optional event notes
+        """
+        miss = missing_fields(title=title, start_date=start_date, end_date=end_date)
+        if miss:
+            return (
+                f"Cannot book yet. Missing required details: {', '.join(miss)}. "
+                "Ask the user for the missing details before trying again."
+            )
+
+        sd = parse_calendar_date(start_date)
+        ed = parse_calendar_date(end_date)
+        if not sd or not ed:
+            return 'Dates must be YYYY-MM-DD, for example 2026-05-16.'
+
+        if ed < sd:
+            sd, ed = ed, sd
+
+        today = datetime.now(self._tz()).date()
+        if ed < today:
+            return (
+                f"The requested dates are in the past. Today is {today.isoformat()}. "
+                "Ask the user to confirm future dates."
+            )
+
+        # Google Calendar all-day events use exclusive end date
+        exclusive_end = ed + timedelta(days=1)
+
+        try:
+            event = await self._calendar_call(
+                'create all-day event',
+                self.calendar.create_all_day_event,
+                title, description, sd.isoformat(), exclusive_end.isoformat(),
+            )
+        except Exception as exc:
+            logger.error('all-day event creation failed: %s', exc)
+            return 'Could not create the calendar event. Please try again.'
+
+        self.last_booked_event_id = event.get('id')
+        self.last_booked_title = event.get('summary', title)
+
+        return (
+            f'All-day event booked: {self.last_booked_title}, '
+            f'{sd.strftime("%A %B %d")} through {ed.strftime("%A %B %d")}.'
+        )
+
+    # ------------------------------------------------------------------
+    # Mutation tools
+    # ------------------------------------------------------------------
 
     @function_tool
     async def cancel_last_event(self, context: RunContext) -> str:
@@ -427,13 +518,13 @@ class CalendarBookingAssistant(Agent):
             self.last_booked_title = None
             return f"Successfully cancelled {title}."
         except Exception as exc:
-            print(f'[calendar] unable to cancel event: {exc}')
+            logger.error('event cancellation failed: %s', exc)
             return 'I could not cancel the event on the calendar.'
 
     @function_tool
     async def rename_last_event(self, context: RunContext, new_title: str) -> str:
         """Rename the most recently booked event during this session.
-        
+
         Args:
             new_title: The new title for the event.
         """
@@ -447,13 +538,12 @@ class CalendarBookingAssistant(Agent):
             event = await self._calendar_call(
                 'rename event',
                 self.calendar.update_event_summary,
-                self.last_booked_event_id,
-                new_title,
+                self.last_booked_event_id, new_title,
             )
             self.last_booked_title = event.get('summary') or new_title
             return f"Successfully renamed the event to {self.last_booked_title}."
         except Exception as exc:
-            print(f'[calendar] unable to rename event: {exc}')
+            logger.error('event rename failed: %s', exc)
             return 'I could not rename the event on the calendar.'
 
     @function_tool
@@ -475,69 +565,58 @@ class CalendarBookingAssistant(Agent):
             new_start_iso: New meeting start (ISO datetime)
             new_end_iso: New meeting end (ISO datetime)
         """
-        missing = self._missing_fields(
+        miss = missing_fields(
             search_query=search_query,
             search_window_start_iso=search_window_start_iso,
             search_window_end_iso=search_window_end_iso,
             new_start_iso=new_start_iso,
             new_end_iso=new_end_iso,
         )
-        if missing:
-            return f"Missing required details: {', '.join(missing)}."
+        if miss:
+            return f"Missing required details: {', '.join(miss)}."
 
-        window_start, ws_err = self._parse_dt_or_error(search_window_start_iso, 'search_window_start_iso')
-        window_end, we_err = self._parse_dt_or_error(search_window_end_iso, 'search_window_end_iso')
-        new_start, ns_err = self._parse_dt_or_error(new_start_iso, 'new_start_iso')
-        new_end, ne_err = self._parse_dt_or_error(new_end_iso, 'new_end_iso')
+        ws, ws_err = parse_dt_or_error(search_window_start_iso, 'search_window_start_iso', GOOGLE_TIMEZONE)
+        we, we_err = parse_dt_or_error(search_window_end_iso, 'search_window_end_iso', GOOGLE_TIMEZONE)
+        ns, ns_err = parse_dt_or_error(new_start_iso, 'new_start_iso', GOOGLE_TIMEZONE)
+        ne, ne_err = parse_dt_or_error(new_end_iso, 'new_end_iso', GOOGLE_TIMEZONE)
         for err in [ws_err, we_err, ns_err, ne_err]:
             if err:
                 return err
 
-        validation_error = self._validate_future_window(new_start, new_end)
-        if validation_error:
-            return validation_error
+        val_err = validate_future_window(ns, ne, GOOGLE_TIMEZONE)
+        if val_err:
+            return val_err
 
-        # Find the event
         try:
             events = await self._calendar_call(
-                'find event to reschedule',
-                self.calendar.find_events,
-                window_start,
-                window_end,
-                search_query,
+                'find event', self.calendar.find_events, ws, we, search_query,
             )
         except Exception as exc:
-            print(f'[calendar] unable to search events: {exc}')
+            logger.error('event search failed: %s', exc)
             return 'Calendar search failed. Please try again.'
 
         if not events:
             return f'No event matching "{search_query}" found in that time window.'
 
-        target_event = events[0]
-        event_id = target_event.get('id')
-        event_title = target_event.get('summary', 'Untitled')
+        target = events[0]
+        event_id = target.get('id')
+        event_title = target.get('summary', 'Untitled')
 
-        # Check new time is free
         try:
-            is_free = await self._calendar_call('check new time', self.calendar.is_free, new_start, new_end)
+            is_free = await self._calendar_call('check new time', self.calendar.is_free, ns, ne)
         except Exception as exc:
-            print(f'[calendar] unable to check availability for reschedule: {exc}')
+            logger.error('reschedule availability check failed: %s', exc)
             return 'Could not check the new time slot. Please try again.'
 
         if not is_free:
-            return f'The new time slot is not available. Try "suggest_time_slots" to find open times.'
+            return 'The new time slot is not available. Try "suggest_time_slots" to find open times.'
 
-        # Move the event
         try:
-            updated = await self._calendar_call(
-                'reschedule event',
-                self.calendar.update_event_time,
-                event_id,
-                new_start,
-                new_end,
+            await self._calendar_call(
+                'reschedule event', self.calendar.update_event_time, event_id, ns, ne,
             )
         except Exception as exc:
-            print(f'[calendar] unable to reschedule event: {exc}')
+            logger.error('reschedule failed: %s', exc)
             return 'Could not reschedule the event. Please try again.'
 
         self.last_booked_event_id = event_id
@@ -545,10 +624,14 @@ class CalendarBookingAssistant(Agent):
 
         return (
             f'Successfully rescheduled "{event_title}" to '
-            f'{new_start.strftime("%A, %B %d %Y, %I:%M %p")} - '
-            f'{new_end.strftime("%I:%M %p")}.'
+            f'{ns.strftime("%A, %B %d %Y, %I:%M %p")} - '
+            f'{ne.strftime("%I:%M %p")}.'
         )
 
+
+# ======================================================================
+# LiveKit session entrypoint
+# ======================================================================
 
 server = agents.AgentServer()
 server.prewarm = prewarm
@@ -564,12 +647,6 @@ async def entrypoint(ctx: agents.JobContext):
         tts=build_tts(),
         vad=vad,
         aec_warmup_duration=0.8,
-        # Strip markdown/emoji from LLM output before TTS speaks it
-        tts_text_transforms=[
-            'filter_markdown',
-            'filter_emoji',
-            strip_markdown,
-        ],
         conn_options=SessionConnectOptions(
             stt_conn_options=APIConnectOptions(timeout=60.0, max_retry=2),
             llm_conn_options=APIConnectOptions(timeout=EFFECTIVE_LLM_REQUEST_TIMEOUT_SECONDS, max_retry=1),
@@ -592,16 +669,16 @@ async def entrypoint(ctx: agents.JobContext):
 
     def on_user_input(ev):
         if ev.is_final:
-            print(f'[agent] transcript final: {ev.transcript!r}')
+            logger.info('transcript final: %r', ev.transcript)
 
     def on_speech_created(ev):
-        print(f'[agent] speech created source={ev.source}')
+        logger.info('speech created source=%s', ev.source)
 
     def on_agent_state_changed(ev):
-        print(f'[agent] state {ev.old_state} -> {ev.new_state}')
+        logger.info('state %s -> %s', ev.old_state, ev.new_state)
 
     def on_error(ev):
-        print(f'[agent] runtime error: {ev.error}')
+        logger.error('runtime error: %s', ev.error)
 
     session.on('user_input_transcribed', on_user_input)
     session.on('speech_created', on_speech_created)
@@ -610,10 +687,13 @@ async def entrypoint(ctx: agents.JobContext):
 
     await session.start(room=ctx.room, agent=assistant)
     await session.generate_reply(
-        instructions='Greet the user and offer to help schedule, reschedule, or manage their calendar appointments.'
+        instructions=(
+            'Greet briefly. Say you can check their calendar or book meetings. '
+            'If they ask about availability or weekends, use smart_calendar_lookup or '
+            'calendar_date_range_lookup right away instead of asking for date formats.'
+        )
     )
 
 
 if __name__ == '__main__':
     agents.cli.run_app(server)
-
